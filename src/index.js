@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './style/index.css'
 import SetEditor from './SetEditor';
+import Sets from "./Sets";
 
 class App extends React.Component {
   constructor(props) {
@@ -45,6 +46,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
+        <Sets setsList={this.state.setsList}/>
         <SetEditor
           enterExercise={this.enterExercise}
           enterSetsNum={this.enterSetsNum}
