@@ -1,12 +1,12 @@
 import React from 'react';
 
-export default class ExerciseEditor extends React.Component {
+export default class SetEditor extends React.Component {
   render() {
     return (
-      <figure className="exerciseEditor">
+      <figure className="setEditor">
         <button
           className="close"
-          onClick={this.props.hideExerciseEditor}
+          onClick={this.props.hideSetEditor}
         >×</button>
         <div className="inputAndButtons">
           <input onChange={this.props.enterExercise}
@@ -15,11 +15,11 @@ export default class ExerciseEditor extends React.Component {
           />
           <button
             onClick={() => {
-              this.props.addExercise();
-              this.props.hideExerciseEditor();
+              this.props.addSet();
+              this.props.hideSetEditor();
             }}
           >Done</button>
-          <button onClick={this.props.addExercise}>Next</button>
+          <button onClick={this.props.addSet}>Next</button>
         </div>
         <div className="numbers">
           <div>
