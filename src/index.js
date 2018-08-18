@@ -1,16 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './style/index.css'
-import ExerciseEditor from './ExerciseEditor';
+import SetEditor from './SetEditor';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showExerciseEditor: true,
+      showSetEditor: true,
       enteredExercise: "",
       enteredSetsNum: 1,
-      exercisesList: []
+      setsList: []
     }
   }
 
@@ -24,32 +24,32 @@ class App extends React.Component {
     this.setState({enteredSetsNum: checkedNumber});
   };
 
-  addExercise = () => {
-    const newExercise = this.state.exercisesList;
-    newExercise.push({
+  addSet = () => {
+    const newSet = this.state.setsList;
+    newSet.push({
       exercise: this.state.enteredExercise,
-      sets: this.state.enteredSetsNum
+      setsNum: this.state.enteredSetsNum
     });
     this.setState({
-      exercisesList: newExercise,
+      setsList: newSet,
       enteredExercise: "",
       enteredSetsNum: 1
     });
-    document.querySelector(".exerciseEditor input").value = "";
+    document.querySelector(".setEditor input").value = "";
   };
 
-  hideExerciseEditor = () => {
-    this.setState({showExerciseEditor: false})
+  hideSetEditor = () => {
+    this.setState({showSetEditor: false})
   };
 
   render() {
     return (
       <div>
-        <ExerciseEditor
+        <SetEditor
           enterExercise={this.enterExercise}
           enterSetsNum={this.enterSetsNum}
-          addExercise={this.addExercise}
-          hideExerciseEditor={this.hideExerciseEditor}
+          addSet={this.addSet}
+          hideSetEditor={this.hideSetEditor}
         />
       </div>
     )
