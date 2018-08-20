@@ -77,6 +77,12 @@ class App extends React.Component {
     this.setState({showSetEditor: false})
   };
 
+  doneSet = (index) => {
+    const updatedSets = this.state.setsList;
+    updatedSets.splice(index, 1);
+    this.setState({setsList: updatedSets});
+  };
+
   render() {
     return (
       <div>
@@ -87,7 +93,8 @@ class App extends React.Component {
                isTimerRunning={this.state.isTimerRunning}
                addTime={this.addTime}
         />
-        <Sets setsList={this.state.setsList}/>
+        <Sets setsList={this.state.setsList}
+              doneSet={this.doneSet}/>
         <SetEditor enterExercise={this.enterExercise}
                    enterSetsNum={this.enterSetsNum}
                    addSet={this.addSet}
