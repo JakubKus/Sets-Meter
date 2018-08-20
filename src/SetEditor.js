@@ -4,10 +4,9 @@ export default class SetEditor extends React.Component {
   render() {
     return (
       <figure className="setEditor">
-        <button
-          className="close"
-          onClick={this.props.hideSetEditor}
-        >×</button>
+        <button onClick={this.props.hideSetEditor}
+                className="close"
+        ><img src="close.svg" alt="close"/></button>
         <div className="inputAndButtons">
           <input onChange={this.props.enterExercise}
                  placeholder="Enter exercise"
@@ -18,7 +17,9 @@ export default class SetEditor extends React.Component {
               this.props.addSet();
               this.props.hideSetEditor();
             }}
-          >Done</button>
+          >
+            Done
+          </button>
           <button onClick={this.props.addSet}>Next</button>
         </div>
         <div className="numbers">
