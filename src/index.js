@@ -109,7 +109,11 @@ class App extends React.Component {
   };
 
   hideSetEditor = () => {
-    this.setState({showSetEditor: false, editMode: false})
+    this.setState({showSetEditor: false, editMode: false});
+  };
+
+  showSetEditor = () => {
+    this.setState({showSetEditor: true, editMode: false});
   };
 
   render() {
@@ -135,6 +139,9 @@ class App extends React.Component {
                    editMode={this.state.editMode}
                    enteredSetsNum={this.state.enteredSetsNum}
         />
+        <figure className="addSetButton">
+          <button onClick={this.showSetEditor}><img src="add.svg"/></button>
+        </figure>
       </div>
     )
   }
