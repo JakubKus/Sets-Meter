@@ -1,12 +1,18 @@
 import React from 'react';
+import NumberButton from "./NumberButton";
 
 export default class SetEditor extends React.Component {
   render() {
+    const showSetEditor = this.props.showSetEditor ? "setEditor" : "hide";
+    const editHide = this.props.editMode ? "hide" : "";
+    const editShow = this.props.editMode ? "" : "hide";
     return (
-      <figure className="setEditor">
+      <figure className={showSetEditor}>
         <button onClick={this.props.hideSetEditor}
                 className="close"
-        ><img src="close.svg" alt="close"/></button>
+        >
+          <img src="close.svg" alt="close"/>
+        </button>
         <div className="inputAndButtons">
           <input onChange={this.props.enterExercise}
                  placeholder="Enter exercise"
@@ -17,26 +23,63 @@ export default class SetEditor extends React.Component {
               this.props.addSet();
               this.props.hideSetEditor();
             }}
+            className={editHide}
           >
             Done
           </button>
-          <button onClick={this.props.addSet}>Next</button>
+          <button onClick={this.props.addSet} className={editHide}>Next</button>
+          <button
+            onClick={() => {
+              this.props.addEditedSet();
+              this.props.hideSetEditor();
+            }}
+            className={editShow}
+          >
+            Done
+          </button>
         </div>
         <div className="numbers">
           <div>
-            <button onClick={this.props.enterSetsNum} value="1">1</button>
-            <button onClick={this.props.enterSetsNum} value="2">2</button>
-            <button onClick={this.props.enterSetsNum} value="3">3</button>
+            <NumberButton enterSetsNum={this.props.enterSetsNum}
+                          enteredSetsNum={this.props.enteredSetsNum}
+                          id="1"
+            />
+            <NumberButton enterSetsNum={this.props.enterSetsNum}
+                          enteredSetsNum={this.props.enteredSetsNum}
+                          id="2"
+            />
+            <NumberButton enterSetsNum={this.props.enterSetsNum}
+                          enteredSetsNum={this.props.enteredSetsNum}
+                          id="3"
+            />
           </div>
           <div>
-            <button onClick={this.props.enterSetsNum} value="4">4</button>
-            <button onClick={this.props.enterSetsNum} value="5">5</button>
-            <button onClick={this.props.enterSetsNum} value="6">6</button>
+            <NumberButton enterSetsNum={this.props.enterSetsNum}
+                          enteredSetsNum={this.props.enteredSetsNum}
+                          id="4"
+            />
+            <NumberButton enterSetsNum={this.props.enterSetsNum}
+                          enteredSetsNum={this.props.enteredSetsNum}
+                          id="5"
+            />
+            <NumberButton enterSetsNum={this.props.enterSetsNum}
+                          enteredSetsNum={this.props.enteredSetsNum}
+                          id="6"
+            />
           </div>
           <div>
-            <button onClick={this.props.enterSetsNum} value="7">7</button>
-            <button onClick={this.props.enterSetsNum} value="8">8</button>
-            <button onClick={this.props.enterSetsNum} value="9">9</button>
+            <NumberButton enterSetsNum={this.props.enterSetsNum}
+                          enteredSetsNum={this.props.enteredSetsNum}
+                          id="7"
+            />
+            <NumberButton enterSetsNum={this.props.enterSetsNum}
+                          enteredSetsNum={this.props.enteredSetsNum}
+                          id="8"
+            />
+            <NumberButton enterSetsNum={this.props.enterSetsNum}
+                          enteredSetsNum={this.props.enteredSetsNum}
+                          id="9"
+            />
           </div>
         </div>
       </figure>
