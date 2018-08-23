@@ -13,9 +13,11 @@ class App extends React.Component {
       currentBreakTime: 180,
       isTimerRunning: false,
       showSetEditor: true,
+      editMode: false,
       enteredExercise: "",
       enteredSetsNum: 1,
-      setsList: []
+      setsList: [],
+      editIndex: ""
     }
   }
 
@@ -40,7 +42,7 @@ class App extends React.Component {
   };
 
   addTime = (time) => {
-    const actualTime = this.state.breakTime + time;
+    const actualTime = this.state.currentBreakTime + time;
     if (actualTime > 599)
       this.setState({breakTime: 599, currentBreakTime: 599});
     else if (actualTime < 0)
@@ -73,14 +75,41 @@ class App extends React.Component {
     document.querySelector(".setEditor input").value = "";
   };
 
-  hideSetEditor = () => {
-    this.setState({showSetEditor: false})
+  editSet = (index) => {
+    const set = this.state.setsList[index];
+    this.setState({
+      showSetEditor: true,
+      editMode: true,
+      editIndex: index,
+      enteredExercise: set.exercise,
+      enteredSetsNum: set.setsNum
+    }, () => {this.fillEditorFields(set.exercise)});
+  };
+
+  fillEditorFields = (exercise) => {
+    document.querySelector(".setEditor .inputAndButtons input")
+      .value = exercise;
+  };
+
+  addEditedSet = () => {
+    const editedList = this.state.setsList;
+    const editIndex = this.state.editIndex;
+    editedList.splice(editIndex, 1, {
+      exercise: this.state.enteredExercise,
+      setsNum: this.state.enteredSetsNum
+    });
+    this.setState({setsList: editedList, editMode: false});
+    document.querySelector(".setEditor input").value = "";
   };
 
   doneSet = (index) => {
     const updatedSets = this.state.setsList;
     updatedSets.splice(index, 1);
     this.setState({setsList: updatedSets});
+  };
+
+  hideSetEditor = () => {
+    this.setState({showSetEditor: false, editMode: false})
   };
 
   render() {
@@ -94,11 +123,17 @@ class App extends React.Component {
                addTime={this.addTime}
         />
         <Sets setsList={this.state.setsList}
-              doneSet={this.doneSet}/>
+              editSet={this.editSet}
+              doneSet={this.doneSet}
+        />
         <SetEditor enterExercise={this.enterExercise}
                    enterSetsNum={this.enterSetsNum}
                    addSet={this.addSet}
                    hideSetEditor={this.hideSetEditor}
+                   addEditedSet={this.addEditedSet}
+                   showSetEditor={this.state.showSetEditor}
+                   editMode={this.state.editMode}
+                   enteredSetsNum={this.state.enteredSetsNum}
         />
       </div>
     )
