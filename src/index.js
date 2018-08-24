@@ -16,13 +16,13 @@ class App extends React.Component {
       editMode: false,
       enteredExercise: "",
       enteredSetsNum: 1,
-      setsList: [],
+      setsList: [{exercise: "klata", setsNum: 3, currentSet: 3}], //to del
       editIndex: ""
     }
   }
 
   timerStart = () => {
-    if(!this.state.isTimerRunning) {
+    if (!this.state.isTimerRunning) {
       this.setState({isTimerRunning: true});
       this.timer = setInterval(() => {
           this.setState({currentBreakTime: this.state.currentBreakTime - 1})
@@ -42,13 +42,13 @@ class App extends React.Component {
   };
 
   addTime = (time) => {
-    const actualTime = this.state.currentBreakTime + time;
-    if (actualTime > 599)
+    const currentTime = this.state.currentBreakTime + time;
+    if (currentTime > 599)
       this.setState({breakTime: 599, currentBreakTime: 599});
-    else if (actualTime < 0)
+    else if (currentTime < 0)
       this.setState({breakTime: 0, currentBreakTime: 0});
     else
-      this.setState({breakTime: actualTime, currentBreakTime: actualTime});
+      this.setState({breakTime: currentTime, currentBreakTime: currentTime});
   };
 
   enterExercise = (input) => {
@@ -65,7 +65,8 @@ class App extends React.Component {
     const newSet = this.state.setsList;
     newSet.push({
       exercise: this.state.enteredExercise,
-      setsNum: this.state.enteredSetsNum
+      setsNum: this.state.enteredSetsNum,
+      currentSet: 1
     });
     this.setState({
       setsList: newSet,
@@ -95,6 +96,7 @@ class App extends React.Component {
     const editedList = this.state.setsList;
     const editIndex = this.state.editIndex;
     editedList.splice(editIndex, 1, {
+      ...editedList[editIndex],
       exercise: this.state.enteredExercise,
       setsNum: this.state.enteredSetsNum
     });
@@ -116,6 +118,37 @@ class App extends React.Component {
     this.setState({showSetEditor: true, editMode: false});
   };
 
+  calculateSet = (index, operation) => {
+    const setsNum = this.state.setsList[index].setsNum;
+    const currentSet = this.state.setsList[index].currentSet;
+    let calculatedSet;
+    if(operation === "plus") {
+      calculatedSet = currentSet < setsNum ? currentSet + 1 : currentSet;
+    }
+    else if(operation === "minus") {
+      calculatedSet = currentSet - 1 > 0 ? currentSet - 1 : currentSet;
+    }
+    return calculatedSet;
+  };
+
+  plusSet = (index) => {
+    const updatedSets = this.state.setsList;
+    updatedSets.splice(index, 1, {
+      ...updatedSets[index],
+      currentSet: this.calculateSet(index, "plus")
+    });
+    this.setState({setsList: updatedSets});
+  };
+
+  minusSet = (index) => {
+    const updatedSets = this.state.setsList;
+    updatedSets.splice(index, 1, {
+      ...updatedSets[index],
+      currentSet: this.calculateSet(index, "minus")
+    });
+    this.setState({setsList: updatedSets});
+  };
+
   render() {
     return (
       <div>
@@ -129,6 +162,8 @@ class App extends React.Component {
         <Sets setsList={this.state.setsList}
               editSet={this.editSet}
               doneSet={this.doneSet}
+              plusSet={this.plusSet}
+              minusSet={this.minusSet}
         />
         <SetEditor enterExercise={this.enterExercise}
                    enterSetsNum={this.enterSetsNum}
@@ -140,7 +175,9 @@ class App extends React.Component {
                    enteredSetsNum={this.state.enteredSetsNum}
         />
         <figure className="addSetButton">
-          <button onClick={this.showSetEditor}><img src="add.svg"/></button>
+          <button onClick={this.showSetEditor}>
+            <img src="add.svg" alt="add"/>
+          </button>
         </figure>
       </div>
     )
