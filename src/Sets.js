@@ -5,18 +5,24 @@ export default class Sets extends React.Component {
     const sets = this.props.setsList.map((set, index) => {
       return (
         <div key={index}>
-          <button className="subtractSet">
+          <button onClick={() => {this.props.minusSet(index)}}
+                  className="subtractSet"
+          >
             <img src="subtract.svg" alt="subtract"/>
           </button>
           <div className="setsMeter">
-            <span className="actualSet">1</span>
+            <span className="currentSet">{set.currentSet}</span>
             <span>/{set.setsNum}</span>
           </div>
-          <button className="addSet">
+          <button onClick={() => {this.props.plusSet(index)}}
+                  className="addSet"
+          >
             <img src="add.svg" alt="add"/>
           </button>
           <span className="exerciseName">{set.exercise}</span>
-          <button className="setEdit">
+          <button onClick={() => {this.props.editSet(index)}}
+                  className="setEdit"
+          >
             <img src="edit.svg" alt="edit"/>
           </button>
           <button className="setDone"
