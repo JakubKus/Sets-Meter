@@ -2,30 +2,61 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './style/index.css'
 import SetEditor from './SetEditor';
-import Sets from "./Sets";
 import Timer from "./Timer";
+import Sets from "./Sets";
+import WebFont from 'webfontloader';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      showSetEditor: true,
+      enteredExercise: "",
+      enteredSetsNum: 1,
+      setsList: [],
       breakTime: 180,
       currentBreakTime: 180,
       isTimerRunning: false,
-      showSetEditor: true,
       editMode: false,
-      enteredExercise: "",
-      enteredSetsNum: 1,
-      setsList: [{exercise: "klata", setsNum: 3, currentSet: 3}], //to del
       editIndex: ""
     }
   }
+
+  enterExercise = (input) => {
+    const inputVal = input.target.value;
+    this.setState({enteredExercise: inputVal});
+  };
+
+  enterSetsNum = (number) => {
+    const checkedNumber = number.target.value;
+    this.setState({enteredSetsNum: checkedNumber});
+  };
+
+  saveSet = () => {
+    const newSet = this.state.setsList;
+    newSet.push({
+      exercise: this.state.enteredExercise,
+      setsNum: this.state.enteredSetsNum,
+      currentSet: 1
+    });
+    this.setState({
+      setsList: newSet,
+      enteredExercise: "",
+      enteredSetsNum: 1
+    });
+    document.querySelector(".setEditor input").value = "";
+  };
 
   timerStart = () => {
     if (!this.state.isTimerRunning) {
       this.setState({isTimerRunning: true});
       this.timer = setInterval(() => {
-          this.setState({currentBreakTime: this.state.currentBreakTime - 1})
+          if (this.state.currentBreakTime !== 0) {
+            this.setState({currentBreakTime: this.state.currentBreakTime - 1})
+          }
+          else {
+            this.timerPause();
+          }
         }, 1000
       );
     }
@@ -51,29 +82,35 @@ class App extends React.Component {
       this.setState({breakTime: currentTime, currentBreakTime: currentTime});
   };
 
-  enterExercise = (input) => {
-    const inputVal = input.target.value;
-    this.setState({enteredExercise: inputVal});
+  calculateSet = (index, operation) => {
+    const setsNum = this.state.setsList[index].setsNum;
+    const currentSet = this.state.setsList[index].currentSet;
+    let calculatedSet;
+    if(operation === "add") {
+      calculatedSet = currentSet < setsNum ? currentSet + 1 : currentSet;
+    }
+    else if(operation === "subtract") {
+      calculatedSet = currentSet - 1 > 0 ? currentSet - 1 : currentSet;
+    }
+    return calculatedSet;
   };
 
-  enterSetsNum = (number) => {
-    const checkedNumber = number.target.value;
-    this.setState({enteredSetsNum: checkedNumber});
+  addSet = (index) => {
+    const updatedSets = this.state.setsList;
+    updatedSets.splice(index, 1, {
+      ...updatedSets[index],
+      currentSet: this.calculateSet(index, "add")
+    });
+    this.setState({setsList: updatedSets});
   };
 
-  addSet = () => {
-    const newSet = this.state.setsList;
-    newSet.push({
-      exercise: this.state.enteredExercise,
-      setsNum: this.state.enteredSetsNum,
-      currentSet: 1
+  subtractSet = (index) => {
+    const updatedSets = this.state.setsList;
+    updatedSets.splice(index, 1, {
+      ...updatedSets[index],
+      currentSet: this.calculateSet(index, "subtract")
     });
-    this.setState({
-      setsList: newSet,
-      enteredExercise: "",
-      enteredSetsNum: 1
-    });
-    document.querySelector(".setEditor input").value = "";
+    this.setState({setsList: updatedSets});
   };
 
   editSet = (index) => {
@@ -84,15 +121,15 @@ class App extends React.Component {
       editIndex: index,
       enteredExercise: set.exercise,
       enteredSetsNum: set.setsNum
-    }, () => {this.fillEditorFields(set.exercise)});
+    }, () => {this.fillInputField(set.exercise)});
   };
 
-  fillEditorFields = (exercise) => {
+  fillInputField = (exercise) => {
     document.querySelector(".setEditor .inputAndButtons input")
       .value = exercise;
   };
 
-  addEditedSet = () => {
+  saveEditedSet = () => {
     const editedList = this.state.setsList;
     const editIndex = this.state.editIndex;
     editedList.splice(editIndex, 1, {
@@ -101,7 +138,6 @@ class App extends React.Component {
       setsNum: this.state.enteredSetsNum
     });
     this.setState({setsList: editedList, editMode: false});
-    document.querySelector(".setEditor input").value = "";
   };
 
   doneSet = (index) => {
@@ -118,61 +154,30 @@ class App extends React.Component {
     this.setState({showSetEditor: true, editMode: false});
   };
 
-  calculateSet = (index, operation) => {
-    const setsNum = this.state.setsList[index].setsNum;
-    const currentSet = this.state.setsList[index].currentSet;
-    let calculatedSet;
-    if(operation === "plus") {
-      calculatedSet = currentSet < setsNum ? currentSet + 1 : currentSet;
-    }
-    else if(operation === "minus") {
-      calculatedSet = currentSet - 1 > 0 ? currentSet - 1 : currentSet;
-    }
-    return calculatedSet;
-  };
-
-  plusSet = (index) => {
-    const updatedSets = this.state.setsList;
-    updatedSets.splice(index, 1, {
-      ...updatedSets[index],
-      currentSet: this.calculateSet(index, "plus")
-    });
-    this.setState({setsList: updatedSets});
-  };
-
-  minusSet = (index) => {
-    const updatedSets = this.state.setsList;
-    updatedSets.splice(index, 1, {
-      ...updatedSets[index],
-      currentSet: this.calculateSet(index, "minus")
-    });
-    this.setState({setsList: updatedSets});
-  };
-
   render() {
     return (
       <div>
-        <Timer currentBreakTime={this.state.currentBreakTime}
-               timerStart={this.timerStart}
-               timerPause={this.timerPause}
-               timerStop={this.timerStop}
-               isTimerRunning={this.state.isTimerRunning}
-               addTime={this.addTime}
-        />
-        <Sets setsList={this.state.setsList}
-              editSet={this.editSet}
-              doneSet={this.doneSet}
-              plusSet={this.plusSet}
-              minusSet={this.minusSet}
-        />
         <SetEditor enterExercise={this.enterExercise}
                    enterSetsNum={this.enterSetsNum}
-                   addSet={this.addSet}
+                   saveSet={this.saveSet}
+                   saveEditedSet={this.saveEditedSet}
                    hideSetEditor={this.hideSetEditor}
-                   addEditedSet={this.addEditedSet}
                    showSetEditor={this.state.showSetEditor}
                    editMode={this.state.editMode}
                    enteredSetsNum={this.state.enteredSetsNum}
+        />
+        <Timer currentBreakTime={this.state.currentBreakTime}
+               isTimerRunning={this.state.isTimerRunning}
+               timerStart={this.timerStart}
+               timerPause={this.timerPause}
+               timerStop={this.timerStop}
+               addTime={this.addTime}
+        />
+        <Sets setsList={this.state.setsList}
+              addSet={this.addSet}
+              subtractSet={this.subtractSet}
+              editSet={this.editSet}
+              doneSet={this.doneSet}
         />
         <figure className="addSetButton">
           <button onClick={this.showSetEditor}>
@@ -183,5 +188,12 @@ class App extends React.Component {
     )
   }
 }
+
+WebFont.load({
+  google: {
+    families: ['PT Mono:400', 'sans-serif']
+  }
+});
+
 
 ReactDOM.render( <App/>, document.getElementById('root'));
