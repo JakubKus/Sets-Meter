@@ -1,0 +1,192 @@
+$colorBlue: #226666;
+$colorPurple: #582a72;
+$colorYellow: #aaaa39;
+
+body {
+  background: $colorBlue;
+  font-family: 'PT Mono', sans-serif;
+  margin: 0;
+  padding-top: 83px;
+  text-align: center;
+}
+
+button {
+  border: none;
+  cursor: pointer;
+}
+
+.hide {
+  display: none;
+}
+
+.setEditor {
+  background: $colorPurple;
+  border-radius: 5px;
+  height: fit-content;
+  margin: auto;
+  padding: 5px;
+  position: fixed;
+  top: 0; right: 0; bottom: 0; left: 0;
+  width: 80%; max-width: 400px;
+  z-index: 1;
+
+  .close {
+    background: transparent;
+    display: block;
+    font-size: 0;
+    margin: 0 0 5px auto;
+    padding: 0;
+  }
+
+  .inputAndButtons {
+    display: inline-block;
+    vertical-align: top;
+    width: 70%;
+
+    input {
+      box-sizing: border-box;
+      display: block;
+      font-family: 'PT Mono', sans-serif;
+      margin: 0 auto 5px;
+      max-width: 300px;
+      text-align: center;
+      width: 100%;
+    }
+
+    button {
+      background: $colorYellow;
+      border-radius: 4px;
+      font-family: 'PT Mono', sans-serif;
+      font-size: 16px;
+      margin: 2px;
+      padding: 3px 10px;
+    }
+  }
+
+  .numbers {
+    display: inline-block;
+    width: 30%;
+    text-align: right;
+
+    > div {
+      font-size: 0;
+
+      button {
+        background: $colorYellow;
+        border-radius: 3px;
+        font-family: 'PT Mono', sans-serif;
+        margin: 1px;
+
+        &.checked {
+          background: $colorBlue;
+        }
+      }
+    }
+  }
+}
+
+.timer {
+  background: $colorPurple;
+  position: fixed;
+  top:0; left: 0; right: 0;
+
+  button {
+    border: none;
+    font-size: 0;
+  }
+
+  .controlButtons {
+    display: inline-block;
+    margin-right: 50px;
+    vertical-align: middle;
+
+    button {
+      background: $colorYellow;
+      border-radius: 4px;
+      margin: 4px;
+      width: 40px;
+    }
+  }
+
+  .time {
+    display: inline-block;
+    margin: 5px;
+    vertical-align: middle;
+
+    .hide {
+      visibility: hidden;
+    }
+
+    span {
+      color: $colorYellow;
+      display: inline-block;
+      font-size: 23px;
+      vertical-align: middle;
+
+      button {
+        background: transparent;
+        display: block;
+        margin: 0 2px;
+        padding: 2px;
+
+        img {
+          width: 15px;
+        }
+      }
+    }
+  }
+}
+
+.sets {
+
+  .set {
+    background: $colorYellow;
+    display: flex;
+    margin-bottom: 10px;
+    padding: 10px 0;
+
+    @media (min-width: 650px) {
+      padding: 10px 50px;
+    }
+
+    button {
+      background: transparent;
+      font-size: 0;
+      height: fit-content;
+      margin: auto 5px;
+      padding: 0;
+    }
+
+    .subtractSet img, .addSet img {
+      width: 18px;
+    }
+
+    .setsMeter {
+      font-size: 20px;
+      margin: auto;
+    }
+
+    .exerciseName {
+      flex: 1;
+      font-size: 25px;
+      word-break: break-word;
+    }
+  }
+}
+
+.addSetButton {
+  font-size: 0;
+  margin: 0;
+  position: fixed;
+  right: 15px; bottom: 15px;
+
+  button {
+    background: transparent;
+    font-size: 0;
+    padding: 0;
+
+    img {
+      width: 40px;
+    }
+  }
+}
