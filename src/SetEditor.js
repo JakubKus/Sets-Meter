@@ -14,19 +14,25 @@ export default class SetEditor extends React.Component {
           <img src="close.svg" alt="close"/>
         </button>
         <div className="inputAndButtons">
-          <form action="javascript:void(0);">
+          <form>
             <input onChange={this.props.enterExercise}
                    placeholder="Enter exercise"
                    type="text"
+                   autoFocus
             />
-            <button onClick={this.props.saveSet}
-                    className={editHide}
-                    disabled={!!editHide}
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                this.props.saveSet();
+              }}
+              className={editHide}
+              disabled={!!editHide}
             >
               Next
             </button>
             <button
-              onClick={() => {
+              onClick={(e) => {
+                e.preventDefault();
                 this.props.saveSet();
                 this.props.hideSetEditor();
               }}
