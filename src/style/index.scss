@@ -19,6 +19,16 @@ button {
   display: none;
 }
 
+.blur {
+  background-color: #000000;
+  height: 100%;
+  opacity: 0.4;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  z-index: 1;
+}
+
 .setEditor {
   background: $colorPurple;
   border-radius: 5px;
@@ -28,7 +38,7 @@ button {
   position: fixed;
   top: 0; right: 0; bottom: 0; left: 0;
   width: 80%; max-width: 400px;
-  z-index: 1;
+  z-index: 2;
 
   .close {
     background: transparent;
@@ -186,7 +196,7 @@ button {
     padding: 0;
 
     img {
-      width: 40px;
+      width: 50px;
     }
   }
 }
