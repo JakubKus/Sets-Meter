@@ -32,6 +32,10 @@ class App extends React.Component {
     this.setState({enteredSetsNum: checkedNumber});
   };
 
+  setEditorSelector = () => {
+    return document.querySelector(".setEditor .inputAndButtons input");
+  };
+
   saveSet = () => {
     const newSet = this.state.setsList;
     newSet.push({
@@ -44,7 +48,7 @@ class App extends React.Component {
       enteredExercise: "",
       enteredSetsNum: 1
     });
-    document.querySelector(".setEditor input").value = "";
+    this.setEditorSelector().value = "";
   };
 
   timerStart = () => {
@@ -74,6 +78,7 @@ class App extends React.Component {
 
   addTime = (time) => {
     const currentTime = this.state.currentBreakTime + time;
+
     if (currentTime > 599)
       this.setState({breakTime: 599, currentBreakTime: 599});
     else if (currentTime < 0)
@@ -86,12 +91,12 @@ class App extends React.Component {
     const setsNum = this.state.setsList[index].setsNum;
     const currentSet = this.state.setsList[index].currentSet;
     let calculatedSet;
-    if(operation === "add") {
+
+    if (operation === "add")
       calculatedSet = currentSet < setsNum ? currentSet + 1 : currentSet;
-    }
-    else if(operation === "subtract") {
+    else if (operation === "subtract")
       calculatedSet = currentSet - 1 > 0 ? currentSet - 1 : currentSet;
-    }
+
     return calculatedSet;
   };
 
@@ -121,12 +126,15 @@ class App extends React.Component {
       editIndex: index,
       enteredExercise: set.exercise,
       enteredSetsNum: set.setsNum
-    }, () => {this.fillInputField(set.exercise)});
+    }, () => {
+      this.fillInputField(set.exercise);
+      this.setEditorSelector().focus();
+    });
+
   };
 
   fillInputField = (exercise) => {
-    document.querySelector(".setEditor .inputAndButtons input")
-      .value = exercise;
+    this.setEditorSelector().value = exercise;
   };
 
   saveEditedSet = () => {
@@ -151,12 +159,19 @@ class App extends React.Component {
   };
 
   showSetEditor = () => {
-    this.setState({showSetEditor: true, editMode: false});
+    this.setState({showSetEditor: true, editMode: false}, this.resetSetEditor);
+  };
+
+  resetSetEditor = () => {
+    this.setEditorSelector().value = "";
+    this.setEditorSelector().focus();
   };
 
   render() {
+    const blur = this.state.showSetEditor ? "blur" : "";
     return (
-      <div>
+      <main>
+        <div className={blur}/>
         <SetEditor enterExercise={this.enterExercise}
                    enterSetsNum={this.enterSetsNum}
                    saveSet={this.saveSet}
@@ -181,10 +196,12 @@ class App extends React.Component {
         />
         <figure className="addSetButton">
           <button onClick={this.showSetEditor}>
-            <img src="add.svg" alt="add"/>
+            <img src="add.svg"
+                 alt="add"
+            />
           </button>
         </figure>
-      </div>
+      </main>
     )
   }
 }
@@ -196,4 +213,4 @@ WebFont.load({
 });
 
 
-ReactDOM.render( <App/>, document.getElementById('root'));
+ReactDOM.render(<App/>, document.getElementById('root'));
