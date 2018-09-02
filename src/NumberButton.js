@@ -6,10 +6,7 @@ export default class NumberButton extends React.Component {
     const id = this.props.id;
     const checked = activeNumber === id ? "checked" : "";
     return (
-      <button onClick={this.props.enterSetsNum}
-              className={checked}
-              value={id}
-      >
+      <button onClick={this.props.enterSetsNum} className={checked} value={id}>
         {id}
       </button>
     )
