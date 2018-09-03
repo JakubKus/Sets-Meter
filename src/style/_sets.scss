@@ -1,0 +1,38 @@
+@import 'colors';
+
+.sets {
+
+  .set {
+    background: $colorYellow;
+    display: flex;
+    margin-bottom: 10px;
+    padding: 10px 0;
+
+    @media (min-width: 650px) {
+      padding: 10px 50px;
+    }
+
+    button {
+      background: transparent;
+      font-size: 0;
+      height: fit-content;
+      margin: auto 5px;
+      padding: 0;
+    }
+
+    .subtractSet img, .addSet img {
+      width: 18px;
+    }
+
+    .setsMeter {
+      font-size: 20px;
+      margin: auto;
+    }
+
+    .exerciseName {
+      flex: 1;
+      font-size: 25px;
+      word-break: break-word;
+    }
+  }
+}

@@ -1,0 +1,53 @@
+@import 'colors';
+
+.timer {
+  background: $colorPurple;
+  position: fixed;
+  top:0; left: 0; right: 0;
+
+  button {
+    border: none;
+    font-size: 0;
+  }
+
+  .controlButtons {
+    display: inline-block;
+    margin-right: 50px;
+    vertical-align: middle;
+
+    button {
+      background: $colorYellow;
+      border-radius: 4px;
+      margin: 4px;
+      width: 40px;
+    }
+  }
+
+  .time {
+    display: inline-block;
+    margin: 5px;
+    vertical-align: middle;
+
+    .hide {
+      visibility: hidden;
+    }
+
+    span {
+      color: $colorYellow;
+      display: inline-block;
+      font-size: 23px;
+      vertical-align: middle;
+
+      button {
+        background: transparent;
+        display: block;
+        margin: 0 2px;
+        padding: 2px;
+
+        img {
+          width: 15px;
+        }
+      }
+    }
+  }
+}
