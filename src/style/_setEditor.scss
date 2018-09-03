@@ -3,6 +3,7 @@
 .setEditor {
   background: $colorPurple;
   border-radius: 5px;
+  display: table;
   height: fit-content;
   margin: auto;
   padding: 5px;
@@ -25,11 +26,14 @@
     width: 70%;
 
     input {
+      border: none;
+      border-radius: 4px;
       box-sizing: border-box;
       display: block;
       font-family: 'PT Mono', sans-serif;
-      margin: 0 auto 5px;
+      margin: 0 auto 7px;
       max-width: 300px;
+      padding: 5px 0;
       text-align: center;
       width: 100%;
     }
@@ -56,6 +60,7 @@
         background: $colorYellow;
         border-radius: 3px;
         font-family: 'PT Mono', sans-serif;
+        font-size: 15px;
         margin: 1px;
 
         &.checked {
