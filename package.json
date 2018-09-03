@@ -1,6 +1,6 @@
 {
   "name": "sets-meter",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "dependencies": {
     "node-sass-chokidar": "^1.3.3",
     "react": "^16.4.2",
