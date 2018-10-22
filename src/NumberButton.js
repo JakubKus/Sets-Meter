@@ -1,14 +1,27 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-export default class NumberButton extends React.Component {
-  render() {
-    const activeNumber = this.props.enteredSetsNum.toString();
-    const id = this.props.id;
-    const checked = activeNumber === id ? "checked" : "";
-    return (
-      <button onClick={this.props.enterSetsNum} className={checked} value={id}>
-        {id}
-      </button>
-    )
-  }
-}
+const NumberButton = ({ enteredSetsNum, id, enterSetsNum }) => {
+  const checked = enteredSetsNum.toString() === id ? 'checked' : '';
+  return (
+    <button
+      onClick={enterSetsNum}
+      className={checked}
+      value={id}
+    >
+      {id}
+    </button>
+  );
+};
+
+
+NumberButton.propTypes = {
+  enteredSetsNum: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string,
+  ]).isRequired,
+  id: PropTypes.string.isRequired,
+  enterSetsNum: PropTypes.func.isRequired,
+};
+
+export default NumberButton;
