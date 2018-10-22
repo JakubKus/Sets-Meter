@@ -1,134 +1,139 @@
-import React from 'react';
-import './style/index.scss'
+import React, { Component } from 'react';
+import './style/index.scss';
 import SetEditor from './SetEditor';
-import Timer from "./Timer";
-import Sets from "./Sets";
+import Timer from './Timer';
+import Sets from './Sets';
 
-export default class App extends React.Component {
+export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       showSetEditor: true,
-      enteredExercise: "",
+      enteredExercise: '',
       enteredSetsNum: 1,
       setsList: [],
       breakTime: 120,
       currentBreakTime: 120,
       isTimerRunning: false,
       editMode: false,
-      editIndex: ""
-    }
+      editIndex: '',
+    };
   }
 
   enterExercise = (input) => {
     const inputVal = input.target.value;
-    this.setState({enteredExercise: inputVal});
+    this.setState({ enteredExercise: inputVal });
   };
 
   enterSetsNum = (number) => {
     const checkedNumber = number.target.value;
-    this.setState({enteredSetsNum: checkedNumber});
+    this.setState({ enteredSetsNum: checkedNumber });
   };
 
-  setEditorSelector = () => {
-    return document.querySelector(".setEditor .inputAndButtons input");
-  };
+  setEditorSelector = () => (
+    document.querySelector('.setEditor .inputAndButtons input')
+  );
 
   saveSet = () => {
-    const newSet = this.state.setsList;
-    newSet.push({
-      exercise: this.state.enteredExercise,
-      setsNum: this.state.enteredSetsNum,
-      currentSet: 1
+    const { setsList, enteredExercise, enteredSetsNum } = this.state;
+    setsList.push({
+      exercise: enteredExercise,
+      setsNum: enteredSetsNum,
+      currentSet: 1,
     });
     this.setState({
-      setsList: newSet,
-      enteredExercise: "",
-      enteredSetsNum: 1
+      setsList,
+      enteredExercise: '',
     });
-    this.setEditorSelector().value = "";
+    this.setEditorSelector().value = '';
   };
 
   timerStart = () => {
-    if (!this.state.isTimerRunning) {
-      this.setState({isTimerRunning: true});
+    const { isTimerRunning, currentBreakTime } = this.state;
+    if (!isTimerRunning) {
+      this.setState({ isTimerRunning: true });
       this.timer = setInterval(() => {
-          if (this.state.currentBreakTime !== 0) {
-            this.setState({currentBreakTime: this.state.currentBreakTime - 1})
-          }
-          else {
-            this.timerPause();
-          }
-        }, 1000
-      );
+        if (currentBreakTime !== 0) {
+          this.setState(prevState => ({
+            currentBreakTime: prevState.currentBreakTime - 1,
+          }));
+        } else {
+          this.timerPause();
+        }
+      }, 1000);
     }
   };
 
   timerPause = () => {
-    this.setState({isTimerRunning: false});
+    this.setState({ isTimerRunning: false });
     clearInterval(this.timer);
   };
 
   timerStop = () => {
+    const { breakTime } = this.state;
     this.timerPause();
-    this.setState({currentBreakTime: this.state.breakTime});
+    this.setState({ currentBreakTime: breakTime });
   };
 
   addTime = (time) => {
-    const currentTime = this.state.currentBreakTime + time;
+    let { currentBreakTime } = this.state;
+    currentBreakTime += time;
 
-    if (currentTime > 599)
-      this.setState({breakTime: 599, currentBreakTime: 599});
-    else if (currentTime < 0)
-      this.setState({breakTime: 0, currentBreakTime: 0});
-    else
-      this.setState({breakTime: currentTime, currentBreakTime: currentTime});
+    if (currentBreakTime > 599) {
+      this.setState({ breakTime: 599, currentBreakTime: 599 });
+    } else if (currentBreakTime < 0) {
+      this.setState({ breakTime: 0, currentBreakTime: 0 });
+    } else {
+      this.setState({ breakTime: currentBreakTime, currentBreakTime });
+    }
   };
 
   calculateSet = (index, operation) => {
-    const setsNum = this.state.setsList[index].setsNum;
-    const currentSet = this.state.setsList[index].currentSet;
+    const { setsList } = this.state;
+    const { setsNum, currentSet } = setsList[index];
     let calculatedSet;
 
-    if (operation === "add")
+    if (operation === 'add') {
       calculatedSet = currentSet < setsNum ? currentSet + 1 : currentSet;
-    else if (operation === "subtract")
+    } else if (operation === 'subtract') {
       calculatedSet = currentSet - 1 > 0 ? currentSet - 1 : currentSet;
+    }
 
     return calculatedSet;
   };
 
   addSet = (index) => {
-    const updatedSets = this.state.setsList;
-    updatedSets.splice(index, 1, {
-      ...updatedSets[index],
-      currentSet: this.calculateSet(index, "add")
+    const { setsList } = this.state;
+    setsList.splice(index, 1, {
+      ...setsList[index],
+      currentSet: this.calculateSet(index, 'add'),
     });
-    this.setState({setsList: updatedSets});
+    this.setState({ setsList });
   };
 
   subtractSet = (index) => {
-    const updatedSets = this.state.setsList;
-    updatedSets.splice(index, 1, {
-      ...updatedSets[index],
-      currentSet: this.calculateSet(index, "subtract")
+    const { setsList } = this.state;
+    setsList.splice(index, 1, {
+      ...setsList[index],
+      currentSet: this.calculateSet(index, 'subtract'),
     });
-    this.setState({setsList: updatedSets});
+    this.setState({ setsList });
   };
 
   editSet = (index) => {
-    const set = this.state.setsList[index];
+    const { setsList } = this.state;
+    const set = setsList[index];
+
     this.setState({
       showSetEditor: true,
       editMode: true,
       editIndex: index,
       enteredExercise: set.exercise,
-      enteredSetsNum: set.setsNum
+      enteredSetsNum: set.setsNum,
     }, () => {
       this.fillInputField(set.exercise);
       this.setEditorSelector().focus();
     });
-
   };
 
   fillInputField = (exercise) => {
@@ -136,70 +141,91 @@ export default class App extends React.Component {
   };
 
   saveEditedSet = () => {
-    const editedList = this.state.setsList;
-    const editIndex = this.state.editIndex;
-    editedList.splice(editIndex, 1, {
-      ...editedList[editIndex],
-      exercise: this.state.enteredExercise,
-      setsNum: this.state.enteredSetsNum
+    const {
+      setsList,
+      editIndex,
+      enteredExercise,
+      enteredSetsNum,
+    } = this.state;
+
+    setsList.splice(editIndex, 1, {
+      ...setsList[editIndex],
+      exercise: enteredExercise,
+      setsNum: enteredSetsNum,
     });
-    this.setState({setsList: editedList, editMode: false});
+
+    this.setState({ setsList, editMode: false });
   };
 
   doneSet = (index) => {
-    const updatedSets = this.state.setsList;
-    updatedSets.splice(index, 1);
-    this.setState({setsList: updatedSets});
+    const { setsList } = this.state;
+    setsList.splice(index, 1);
+    this.setState({ setsList });
   };
 
   hideSetEditor = () => {
-    this.setState({showSetEditor: false, editMode: false});
+    this.setState({ showSetEditor: false, editMode: false });
   };
 
   showSetEditor = () => {
-    this.setState({showSetEditor: true, editMode: false}, this.resetSetEditor);
+    this.setState({ showSetEditor: true, editMode: false }, this.resetSetEditor);
   };
 
   resetSetEditor = () => {
-    this.setEditorSelector().value = "";
+    this.setEditorSelector().value = '';
     this.setEditorSelector().focus();
   };
 
   render() {
-    const blur = this.state.showSetEditor ? "blur" : "";
+    const {
+      showSetEditor,
+      editMode,
+      enteredSetsNum,
+      currentBreakTime,
+      isTimerRunning,
+      setsList,
+    } = this.state;
+
+    const blur = showSetEditor ? 'blur' : '';
+
     return (
       <main>
-        <div className={blur}/>
-        <SetEditor enterExercise={this.enterExercise}
-                   enterSetsNum={this.enterSetsNum}
-                   saveSet={this.saveSet}
-                   saveEditedSet={this.saveEditedSet}
-                   hideSetEditor={this.hideSetEditor}
-                   showSetEditor={this.state.showSetEditor}
-                   editMode={this.state.editMode}
-                   enteredSetsNum={this.state.enteredSetsNum}
+        <div className={blur} />
+        <SetEditor
+          enterExercise={this.enterExercise}
+          enterSetsNum={this.enterSetsNum}
+          saveSet={this.saveSet}
+          resetSetEditor={this.resetSetEditor}
+          saveEditedSet={this.saveEditedSet}
+          hideSetEditor={this.hideSetEditor}
+          showSetEditor={showSetEditor}
+          editMode={editMode}
+          enteredSetsNum={enteredSetsNum}
         />
-        <Timer currentBreakTime={this.state.currentBreakTime}
-               isTimerRunning={this.state.isTimerRunning}
-               timerStart={this.timerStart}
-               timerPause={this.timerPause}
-               timerStop={this.timerStop}
-               addTime={this.addTime}
+        <Timer
+          currentBreakTime={currentBreakTime}
+          isTimerRunning={isTimerRunning}
+          timerStart={this.timerStart}
+          timerPause={this.timerPause}
+          timerStop={this.timerStop}
+          addTime={this.addTime}
         />
-        <Sets setsList={this.state.setsList}
-              addSet={this.addSet}
-              subtractSet={this.subtractSet}
-              editSet={this.editSet}
-              doneSet={this.doneSet}
+        <Sets
+          setsList={setsList}
+          addSet={this.addSet}
+          subtractSet={this.subtractSet}
+          editSet={this.editSet}
+          doneSet={this.doneSet}
         />
         <figure className="addSetButton">
           <button onClick={this.showSetEditor}>
-            <img src="add.svg"
-                 alt="add"
+            <img
+              src="add.svg"
+              alt="add"
             />
           </button>
         </figure>
       </main>
-    )
+    );
   }
 }
