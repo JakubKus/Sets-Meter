@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const NumberButton = ({ enteredSetsNum, id, enterSetsNum }) => {
-  const checked = enteredSetsNum.toString() === id ? 'checked' : '';
+  const checked = enteredSetsNum.toString() === id.toString() ? 'checked' : '';
   return (
     <button
       onClick={enterSetsNum}
@@ -20,7 +20,7 @@ NumberButton.propTypes = {
     PropTypes.number,
     PropTypes.string,
   ]).isRequired,
-  id: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
   enterSetsNum: PropTypes.func.isRequired,
 };
 
