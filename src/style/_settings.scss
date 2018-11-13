@@ -1,0 +1,65 @@
+@import 'colors';
+
+.settings {
+  align-items: center;
+  display: flex;
+
+  p {
+    color: $colorYellow;
+    font-size: 13px;
+    margin: 0;
+
+    @media (min-width: 330px) {
+      font-size: 14px;
+    }
+
+    @media (min-width: 360px) {
+      font-size: 16px;
+    }
+
+    @media (min-width: 500px) {
+      font-size: 23px;
+    }
+  }
+
+  button {
+    background: transparent;
+    font-size: 11px;
+    padding: 3px;
+
+    @media (min-width: 330px) {
+      font-size: 12px;
+    }
+
+    @media (min-width: 360px) {
+      font-size: 14px;
+    }
+
+    @media (min-width: 500px) {
+      font-size: 16px;
+    }
+
+    &.checked {
+      border-bottom: 2px solid $colorYellow;
+    }
+  }
+
+  .bells {
+    margin-left: 5px;
+
+    button {
+
+      img {
+        width: 20px;
+
+        @media (min-width: 330px) {
+          width: 21px;
+        }
+
+        @media (min-width: 360px) {
+          width: 24px;
+        }
+      }
+    }
+  }
+}

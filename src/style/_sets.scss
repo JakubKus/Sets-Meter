@@ -20,19 +20,81 @@
       padding: 0;
     }
 
-    .subtractSet img, .addSet img {
-      width: 18px;
-    }
-
     .setsMeter {
-      font-size: 20px;
-      margin: auto;
+      display: flex;
+
+      .decrease {
+
+        img {
+          border: 2px solid;
+          border-radius: 20px;
+          width: 14px;
+
+          @media (min-width: 330px) {
+            width: 15px;
+          }
+
+          @media (min-width: 360px) {
+            width: 16px;
+          }
+
+          @media (min-width: 500px) {
+            width: 18px;
+          }
+        }
+
+        &.invisible {
+          visibility: hidden;
+        }
+      }
+
+      .setsLeft {
+        font-size: 15px;
+        margin: auto;
+
+        @media (min-width: 330px) {
+          font-size: 16px;
+        }
+
+        @media (min-width: 360px) {
+          font-size: 17px;
+        }
+
+        @media (min-width: 500px) {
+          font-size: 20px;
+        }
+
+        .num {
+          font-weight: bold;
+          margin-right: 5px;
+        }
+      }
     }
 
     .exerciseName {
       flex: 1;
-      font-size: 25px;
+      font-size: 16px;
       word-break: break-word;
+
+      @media (min-width: 330px) {
+        font-size: 17px;
+      }
+
+      @media (min-width: 360px) {
+        font-size: 18px;
+      }
+
+      @media (min-width: 500px) {
+        font-size: 25px;
+      }
+    }
+
+    .setEdit img, .setDone img {
+      width: 20px;
+
+      @media (min-width: 500px) {
+        width: 24px;
+      }
     }
   }
 }
