@@ -3,21 +3,25 @@ import PropTypes from 'prop-types';
 import NumberButton from './NumberButton';
 
 const SetEditor = ({
-  enterExercise,
-  enterSetsNum,
-  saveSet,
-  resetSetEditor,
-  saveEditedSet,
-  hideSetEditor,
   showSetEditor,
-  editMode,
+  setEditorRef,
+  enterExercise,
+  enteredExercise,
+  enterSetsNum,
   enteredSetsNum,
+  editMode,
+  addSet,
+  addEditedSet,
+  clearSetEditor,
+  focusSetEditor,
+  hideSetEditor,
 }) => {
-  const editHide = editMode ? 'hide' : '';
-  const editShow = editMode ? '' : 'hide';
+  const editHide = editMode ? 'hidden' : '';
+  const editShow = editMode ? '' : 'hidden';
+  const numberButtons = [3, 6, 9];
 
   return (
-    <figure className={showSetEditor ? 'setEditor' : 'hide'}>
+    <figure className={showSetEditor ? 'setEditor' : 'hidden'}>
       <button
         onClick={hideSetEditor}
         className="close"
@@ -28,6 +32,8 @@ const SetEditor = ({
         <form>
           <input
             onChange={enterExercise}
+            value={enteredExercise}
+            ref={setEditorRef}
             placeholder="Enter exercise"
             type="text"
             autoFocus
@@ -35,8 +41,9 @@ const SetEditor = ({
           <button
             onClick={(e) => {
               e.preventDefault();
-              saveSet();
-              resetSetEditor();
+              addSet();
+              clearSetEditor();
+              focusSetEditor();
             }}
             className={editHide}
             disabled={!!editHide}
@@ -46,7 +53,8 @@ const SetEditor = ({
           <button
             onClick={(e) => {
               e.preventDefault();
-              saveSet();
+              addSet();
+              clearSetEditor();
               hideSetEditor();
             }}
             className={editHide}
@@ -56,7 +64,8 @@ const SetEditor = ({
           </button>
           <button
             onClick={() => {
-              saveEditedSet();
+              addEditedSet();
+              clearSetEditor();
               hideSetEditor();
             }}
             className={editShow}
@@ -67,57 +76,25 @@ const SetEditor = ({
         </form>
       </div>
       <div className="numbers">
-        <div>
-          <NumberButton
-            enterSetsNum={enterSetsNum}
-            enteredSetsNum={enteredSetsNum}
-            id="1"
-          />
-          <NumberButton
-            enterSetsNum={enterSetsNum}
-            enteredSetsNum={enteredSetsNum}
-            id="2"
-          />
-          <NumberButton
-            enterSetsNum={enterSetsNum}
-            enteredSetsNum={enteredSetsNum}
-            id="3"
-          />
-        </div>
-        <div>
-          <NumberButton
-            enterSetsNum={enterSetsNum}
-            enteredSetsNum={enteredSetsNum}
-            id="4"
-          />
-          <NumberButton
-            enterSetsNum={enterSetsNum}
-            enteredSetsNum={enteredSetsNum}
-            id="5"
-          />
-          <NumberButton
-            enterSetsNum={enterSetsNum}
-            enteredSetsNum={enteredSetsNum}
-            id="6"
-          />
-        </div>
-        <div>
-          <NumberButton
-            enterSetsNum={enterSetsNum}
-            enteredSetsNum={enteredSetsNum}
-            id="7"
-          />
-          <NumberButton
-            enterSetsNum={enterSetsNum}
-            enteredSetsNum={enteredSetsNum}
-            id="8"
-          />
-          <NumberButton
-            enterSetsNum={enterSetsNum}
-            enteredSetsNum={enteredSetsNum}
-            id="9"
-          />
-        </div>
+        {numberButtons.filter(nums => (nums % 3 === 0)).map(num => (
+          <div key={num / 3}>
+            <NumberButton
+              enterSetsNum={enterSetsNum}
+              id={num - 2}
+              enteredSetsNum={enteredSetsNum}
+            />
+            <NumberButton
+              enterSetsNum={enterSetsNum}
+              id={num - 1}
+              enteredSetsNum={enteredSetsNum}
+            />
+            <NumberButton
+              enterSetsNum={enterSetsNum}
+              id={num}
+              enteredSetsNum={enteredSetsNum}
+            />
+          </div>
+        ))}
       </div>
     </figure>
   );
@@ -125,18 +102,21 @@ const SetEditor = ({
 
 
 SetEditor.propTypes = {
-  enterExercise: PropTypes.func.isRequired,
-  enterSetsNum: PropTypes.func.isRequired,
-  saveSet: PropTypes.func.isRequired,
-  resetSetEditor: PropTypes.func.isRequired,
-  saveEditedSet: PropTypes.func.isRequired,
-  hideSetEditor: PropTypes.func.isRequired,
   showSetEditor: PropTypes.bool.isRequired,
-  editMode: PropTypes.bool.isRequired,
+  setEditorRef: PropTypes.func.isRequired,
+  enterExercise: PropTypes.func.isRequired,
+  enteredExercise: PropTypes.string.isRequired,
+  enterSetsNum: PropTypes.func.isRequired,
   enteredSetsNum: PropTypes.oneOfType([
     PropTypes.number,
     PropTypes.string,
   ]).isRequired,
+  editMode: PropTypes.bool.isRequired,
+  addSet: PropTypes.func.isRequired,
+  addEditedSet: PropTypes.func.isRequired,
+  clearSetEditor: PropTypes.func.isRequired,
+  focusSetEditor: PropTypes.func.isRequired,
+  hideSetEditor: PropTypes.func.isRequired,
 };
 
 export default SetEditor;

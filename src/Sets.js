@@ -3,37 +3,30 @@ import PropTypes from 'prop-types';
 
 const Sets = ({
   setsList,
-  addSet,
-  subtractSet,
   editSet,
-  doneSet,
+  deleteSet,
+  decreaseSetsNum,
 }) => (
   <div className="sets">
     {
       setsList.map((set, index) => (
         <div className="set" key={index}>
-          <button
-            onClick={() => { subtractSet(index); }}
-            className="subtractSet"
-          >
-            <img
-              src="subtract.svg"
-              alt="subtract"
-            />
-          </button>
           <div className="setsMeter">
-            <span className="currentSet">{set.currentSet}</span>
-            <span>{`/${set.setsNum}`}</span>
+            <button
+              onClick={() => { decreaseSetsNum(index); }}
+              className={set.setsNum > 1 ? 'decrease' : 'decrease invisible'}
+              disabled={set.setsNum < 2}
+            >
+              <img
+                src="arrow-down.svg"
+                alt="down"
+              />
+            </button>
+            <div className="setsLeft">
+              <span className="num">{set.setsNum}</span>
+              <span>left</span>
+            </div>
           </div>
-          <button
-            onClick={() => { addSet(index); }}
-            className="addSet"
-          >
-            <img
-              src="add.svg"
-              alt="add"
-            />
-          </button>
           <span className="exerciseName">{set.exercise}</span>
           <button
             onClick={() => { editSet(index); }}
@@ -46,11 +39,11 @@ const Sets = ({
           </button>
           <button
             className="setDone"
-            onClick={() => { doneSet(index); }}
+            onClick={() => { deleteSet(index); }}
           >
             <img
               src="delete.svg"
-              alt="done"
+              alt="delete"
             />
           </button>
         </div>
@@ -61,10 +54,9 @@ const Sets = ({
 
 Sets.propTypes = {
   setsList: PropTypes.instanceOf(Array).isRequired,
-  addSet: PropTypes.func.isRequired,
-  subtractSet: PropTypes.func.isRequired,
+  decreaseSetsNum: PropTypes.func.isRequired,
   editSet: PropTypes.func.isRequired,
-  doneSet: PropTypes.func.isRequired,
+  deleteSet: PropTypes.func.isRequired,
 };
 
 export default Sets;
