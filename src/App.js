@@ -27,6 +27,10 @@ export default class App extends Component {
     };
   }
 
+  componentDidMount() {
+    this.focusSetEditor();
+  }
+
   enterExercise = (input) => {
     const { value } = input.target;
     this.setState({ enteredExercise: value });
@@ -195,14 +199,13 @@ export default class App extends Component {
       enteredExercise,
       enteredSetsNum,
       setsList,
-       currentBreakTime,
+      currentBreakTime,
       isTimerRunning,
       notifyStatus,
       editMode,
     } = this.state;
 
-    const blur = showSetEditor ? 'blur' : '';
-
+    const blur = showSetEditor ? 'blur on' : 'blur off';
     return (
       <main>
         <Header
@@ -237,11 +240,11 @@ export default class App extends Component {
           editSet={this.editSet}
           deleteSet={this.deleteSet}
         />
-        <figure className="addSetButton">
+        <div className="addSetButton">
           <button onClick={this.showSetEditor}>
             <img src="add.svg" alt="add" />
           </button>
-        </figure>
+        </div>
       </main>
     );
   }

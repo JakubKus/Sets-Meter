@@ -3,48 +3,31 @@ import PropTypes from 'prop-types';
 
 const Sets = ({
   setsList,
+  decreaseSetsNum,
   editSet,
   deleteSet,
-  decreaseSetsNum,
 }) => (
   <div className="sets">
     {
       setsList.map((set, index) => (
         <div className="set" key={index}>
-          <div className="setsMeter">
+          <div className="setsLeft">
             <button
               onClick={() => { decreaseSetsNum(index); }}
               className={set.setsNum > 1 ? 'decrease' : 'decrease invisible'}
               disabled={set.setsNum < 2}
             >
-              <img
-                src="arrow-down.svg"
-                alt="down"
-              />
+              <img src="arrow-down.svg" alt="down" />
             </button>
-            <div className="setsLeft">
-              <span className="num">{set.setsNum}</span>
-              <span>left</span>
-            </div>
+            <span className="num">{set.setsNum}</span>
+            <span>left</span>
           </div>
           <span className="exerciseName">{set.exercise}</span>
-          <button
-            onClick={() => { editSet(index); }}
-            className="setEdit"
-          >
-            <img
-              src="edit.svg"
-              alt="edit"
-            />
+          <button className="setEdit" onClick={() => { editSet(index); }}>
+            <img src="edit.svg" alt="edit" />
           </button>
-          <button
-            className="setDone"
-            onClick={() => { deleteSet(index); }}
-          >
-            <img
-              src="delete.svg"
-              alt="delete"
-            />
+          <button className="setDone" onClick={() => { deleteSet(index); }}>
+            <img src="delete.svg" alt="delete" />
           </button>
         </div>
       ))

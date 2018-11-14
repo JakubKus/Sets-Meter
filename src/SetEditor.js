@@ -16,87 +16,82 @@ const SetEditor = ({
   addEditedSet,
   hideSetEditor,
 }) => {
-  const editHide = editMode ? 'hidden' : '';
-  const editShow = editMode ? '' : 'hidden';
   const numberButtons = [3, 6, 9];
-
   return (
-    <figure className={showSetEditor ? 'setEditor' : 'hidden'}>
+    <div className={showSetEditor ? 'setEditor on' : 'setEditor off'}>
       <button
         onClick={hideSetEditor}
         className="close"
       >
         <img src="close.svg" alt="close" />
       </button>
-      <div className="inputAndButtons">
-        <form>
-          <input
-            onChange={enterExercise}
-            value={enteredExercise}
-            ref={setEditorRef}
-            placeholder="Enter exercise"
-            type="text"
-            autoFocus
-          />
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              addSet();
-              clearSetEditor();
-              focusSetEditor();
-            }}
-            className={editHide}
-            disabled={!!editHide}
-          >
-            {'Next'}
-          </button>
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              addSet();
-              clearSetEditor();
-              hideSetEditor();
-            }}
-            className={editHide}
-            disabled={!!editHide}
-          >
-            {'Done'}
-          </button>
-          <button
-            onClick={() => {
-              addEditedSet();
-              clearSetEditor();
-              hideSetEditor();
-            }}
-            className={editShow}
-            disabled={!!editShow}
-          >
-            {'Done'}
-          </button>
-        </form>
-      </div>
+      <form className="inputAndButtons">
+        <input
+          onChange={enterExercise}
+          value={enteredExercise}
+          ref={setEditorRef}
+          placeholder="Enter exercise"
+        />
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            addSet();
+            clearSetEditor();
+            focusSetEditor();
+          }}
+          className={editMode ? 'hidden' : ''}
+          disabled={editMode}
+        >
+          {'Next'}
+        </button>
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            addSet();
+            clearSetEditor();
+            hideSetEditor();
+          }}
+          className={editMode ? 'hidden' : ''}
+          disabled={editMode}
+        >
+          {'Done'}
+        </button>
+        <button
+          onClick={() => {
+            addEditedSet();
+            clearSetEditor();
+            hideSetEditor();
+          }}
+          className={editMode ? '' : 'hidden'}
+          disabled={!editMode}
+        >
+          {'Done'}
+        </button>
+      </form>
       <div className="numbers">
-        {numberButtons.filter(nums => (nums % 3 === 0)).map(num => (
-          <div key={num / 3}>
-            <NumberButton
-              enterSetsNum={enterSetsNum}
-              id={num - 2}
-              enteredSetsNum={enteredSetsNum}
-            />
-            <NumberButton
-              enterSetsNum={enterSetsNum}
-              id={num - 1}
-              enteredSetsNum={enteredSetsNum}
-            />
-            <NumberButton
-              enterSetsNum={enterSetsNum}
-              id={num}
-              enteredSetsNum={enteredSetsNum}
-            />
-          </div>
-        ))}
+        {
+          numberButtons.filter(nums => (nums % 3 === 0)).map(num => (
+            <div key={num / 3}>
+              <NumberButton
+                enterSetsNum={enterSetsNum}
+                id={num - 2}
+                enteredSetsNum={enteredSetsNum}
+              />
+              <NumberButton
+                enterSetsNum={enterSetsNum}
+                id={num - 1}
+                enteredSetsNum={enteredSetsNum}
+              />
+              <NumberButton
+                enterSetsNum={enterSetsNum}
+                id={num}
+                enteredSetsNum={enteredSetsNum}
+              />
+            </div>
+          ))
+        }
       </div>
-    </figure>
+    </div>
   );
 };
 
