@@ -9,11 +9,11 @@ const SetEditor = ({
   enteredExercise,
   enterSetsNum,
   enteredSetsNum,
-  editMode,
-  addSet,
-  addEditedSet,
   clearSetEditor,
   focusSetEditor,
+  addSet,
+  editMode,
+  addEditedSet,
   hideSetEditor,
 }) => {
   const editHide = editMode ? 'hidden' : '';
@@ -111,11 +111,11 @@ SetEditor.propTypes = {
     PropTypes.number,
     PropTypes.string,
   ]).isRequired,
-  editMode: PropTypes.bool.isRequired,
-  addSet: PropTypes.func.isRequired,
-  addEditedSet: PropTypes.func.isRequired,
   clearSetEditor: PropTypes.func.isRequired,
   focusSetEditor: PropTypes.func.isRequired,
+  addSet: PropTypes.func.isRequired,
+  editMode: PropTypes.bool.isRequired,
+  addEditedSet: PropTypes.func.isRequired,
   hideSetEditor: PropTypes.func.isRequired,
 };
 
