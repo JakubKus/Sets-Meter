@@ -8,22 +8,22 @@ const Settings = ({
 }) => (
   <div className="settings">
     <div className="mode">
-      <p>Mode</p>
-      <button className="checked">SW</button>
-      <button>Gym</button>
+      <p className="title">Mode</p>
+      <button className="sw checked">SW</button>
+      <button className="gym">Gym</button>
     </div>
-    <div className="bells">
+    <div className="notifications">
       <button
         onClick={startNotifyTimer}
-        className={notifyStatus ? 'checked' : ''}
+        className={notifyStatus ? 'on checked' : 'on'}
       >
-        <img src="bell-on.svg" alt="swOn" />
+        <img src="notifications-on.svg" alt="notifications on" />
       </button>
       <button
         onClick={stopNotifyTimer}
-        className={!notifyStatus ? 'checked' : ''}
+        className={!notifyStatus ? 'off checked' : 'off'}
       >
-        <img src="bell-off.svg" alt="swOff" />
+        <img src="notifications-off.svg" alt="notifications off" />
       </button>
     </div>
   </div>
