@@ -12,9 +12,12 @@ export default class App extends Component {
       enteredExercise: '',
       enteredSetsNum: 1,
       setsList: [],
+      breakTime: 120,
+      currentBreakTime: 120,
+      isTimerRunning: false,
+      notifyStatus: false,
       editMode: false,
       editIndex: '',
-      notifyStatus: false,
     };
 
     this.setEditorInput = null;
@@ -34,6 +37,14 @@ export default class App extends Component {
     this.setState({ enteredSetsNum: value });
   };
 
+  clearSetEditor = () => {
+    this.setState({ enteredExercise: '' });
+  };
+
+  focusSetEditor = () => {
+    this.setEditorInput.focus();
+  };
+
   addSet = () => {
     const { setsList, enteredExercise, enteredSetsNum } = this.state;
     setsList.push({
@@ -41,6 +52,106 @@ export default class App extends Component {
       setsNum: enteredSetsNum,
     });
     this.setState({ setsList });
+  };
+
+  timerStart = () => {
+    const { isTimerRunning } = this.state;
+    if (!isTimerRunning) {
+      this.setState({ isTimerRunning: true });
+      this.timer = setInterval(() => {
+        const { currentBreakTime } = this.state;
+        if (currentBreakTime > 0) {
+          this.setState(prevState => (
+            { currentBreakTime: prevState.currentBreakTime - 1 }
+          ));
+        } else {
+          this.timerPause();
+        }
+      }, 1000);
+    }
+  };
+
+  timerPause = () => {
+    this.setState({ isTimerRunning: false });
+    clearInterval(this.timer);
+  };
+
+  timerStop = () => {
+    const { breakTime } = this.state;
+    this.timerPause();
+    this.setState({ currentBreakTime: breakTime });
+  };
+
+  addTime = (time) => {
+    let { currentBreakTime } = this.state;
+    currentBreakTime += time;
+
+    if (currentBreakTime > 599) {
+      this.setState({ breakTime: 599, currentBreakTime: 599 });
+    } else if (currentBreakTime < 0) {
+      this.setState({ breakTime: 0, currentBreakTime: 0 });
+    } else {
+      this.setState({ breakTime: currentBreakTime, currentBreakTime });
+    }
+  };
+
+  startNotifyTimer = () => {
+    this.setState({ notifyStatus: true });
+    const { setsList, breakTime } = this.state;
+    const options = {
+      vibrate: 100,
+      data: { setsList, breakTime },
+      actions: [{ action: 'Exercises notification', title: 'Start' }],
+    };
+
+    if ('serviceWorker' in navigator) {
+      Notification.requestPermission()
+        .then(() => navigator.serviceWorker.register('/sw.js'))
+        .then(() => navigator.serviceWorker.ready
+          .then(s => (
+            s.showNotification('Click to begin', options)
+          )))
+        .catch(e => console.log(e.message));
+    }
+  };
+
+  stopNotifyTimer = () => {
+    this.setState({ notifyStatus: false });
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js')
+        .then(reg => reg.unregister());
+    }
+  };
+
+  decreaseSetsNum = (index) => {
+    const { setsList } = this.state;
+    const set = setsList[index];
+    const { setsNum } = set;
+
+    if (setsNum > 1) {
+      setsList.splice(index, 1, {
+        ...set,
+        setsNum: setsNum - 1,
+      });
+    }
+
+    this.setState({ setsList });
+  };
+
+  editSet = (index) => {
+    const { setsList } = this.state;
+    const set = setsList[index];
+
+    this.setState({
+      showSetEditor: true,
+      editMode: true,
+      editIndex: index,
+      enteredExercise: set.exercise,
+      enteredSetsNum: set.setsNum,
+    }, () => {
+      this.focusSetEditor();
+    });
   };
 
   addEditedSet = () => {
@@ -58,29 +169,6 @@ export default class App extends Component {
     });
 
     this.setState({ setsList, editMode: false });
-  };
-
-  clearSetEditor = () => {
-    this.setState({ enteredExercise: '' });
-  };
-
-  focusSetEditor = () => {
-    this.setEditorInput.focus();
-  };
-
-  editSet = (index) => {
-    const { setsList } = this.state;
-    const set = setsList[index];
-
-    this.setState({
-      showSetEditor: true,
-      editMode: true,
-      editIndex: index,
-      enteredExercise: set.exercise,
-      enteredSetsNum: set.setsNum,
-    }, () => {
-      this.focusSetEditor();
-    });
   };
 
   deleteSet = (index) => {
@@ -101,58 +189,16 @@ export default class App extends Component {
     this.setState({ showSetEditor: false, editMode: false });
   };
 
-  decreaseSetsNum = (index) => {
-    const { setsList } = this.state;
-    const set = setsList[index];
-    const { setsNum } = set;
-
-    if (setsNum > 1) {
-      setsList.splice(index, 1, {
-        ...set,
-        setsNum: setsNum - 1,
-      });
-    }
-
-    this.setState({ setsList });
-  };
-
-  startNotifyTimer = () => {
-    this.setState({ notifyStatus: true });
-    const { setsList, breakTime } = this.state;
-    const options = {
-      vibrate: 100,
-      data: { setsList, breakTime, activeBreak: false },
-      actions: [{ action: 'Exercises notification', title: 'Start' }],
-    };
-
-    if ('serviceWorker' in navigator) {
-      Notification.requestPermission()
-        .then(() => navigator.serviceWorker.register('/sw.js'))
-        .then(() => navigator.serviceWorker.ready
-          .then((s) => {
-            s.showNotification('Click to begin', options);
-          }))
-        .catch(e => console.log(e.message));
-    }
-  };
-
-  stopNotifyTimer = () => {
-    this.setState({ notifyStatus: false });
-
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js')
-        .then(reg => reg.unregister());
-    }
-  };
-
   render() {
     const {
       showSetEditor,
-      editMode,
       enteredExercise,
       enteredSetsNum,
       setsList,
+       currentBreakTime,
+      isTimerRunning,
       notifyStatus,
+      editMode,
     } = this.state;
 
     const blur = showSetEditor ? 'blur' : '';
@@ -160,6 +206,12 @@ export default class App extends Component {
     return (
       <main>
         <Header
+          currentBreakTime={currentBreakTime}
+          isTimerRunning={isTimerRunning}
+          timerStart={this.timerStart}
+          timerPause={this.timerPause}
+          timerStop={this.timerStop}
+          addTime={this.addTime}
           notifyStatus={notifyStatus}
           startNotifyTimer={this.startNotifyTimer}
           stopNotifyTimer={this.stopNotifyTimer}
@@ -172,11 +224,11 @@ export default class App extends Component {
           enteredExercise={enteredExercise}
           enterSetsNum={this.enterSetsNum}
           enteredSetsNum={enteredSetsNum}
-          editMode={editMode}
-          addSet={this.addSet}
-          addEditedSet={this.addEditedSet}
           clearSetEditor={this.clearSetEditor}
           focusSetEditor={this.focusSetEditor}
+          addSet={this.addSet}
+          editMode={editMode}
+          addEditedSet={this.addEditedSet}
           hideSetEditor={this.hideSetEditor}
         />
         <Sets
