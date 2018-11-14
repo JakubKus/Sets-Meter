@@ -1,7 +1,7 @@
 @import 'setEditor';
 @import 'header';
-@import 'settings';
 @import 'timer';
+@import 'settings';
 @import 'sets';
 @import 'colors';
 
@@ -36,13 +36,16 @@ button {
 }
 
 .blur {
-  background-color: #000000;
-  height: 100%;
-  opacity: 0.4;
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%;
-  z-index: 1;
+
+  &.on {
+    background-color: #000000;
+    height: 100%;
+    opacity: 0.4;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    z-index: 1;
+  }
 }
 
 .addSetButton {
