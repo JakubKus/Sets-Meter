@@ -14,7 +14,6 @@ module.exports = {
     },
   },
   "rules": {
-    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "linebreak-style": [1, "windows"],
     "react/no-array-index-key": 0,
     "react/button-has-type": 0,
