@@ -15,6 +15,7 @@ export default class App extends Component {
       breakTime: 120,
       currentBreakTime: 120,
       isTimerRunning: false,
+      notifyMode: 'sw',
       notifyStatus: false,
       editMode: false,
       editIndex: '',
@@ -97,6 +98,10 @@ export default class App extends Component {
     } else {
       this.setState({ breakTime: currentBreakTime, currentBreakTime });
     }
+  };
+
+  changeNotifyMode = (mode) => {
+    this.setState({ notifyMode: mode });
   };
 
   startNotifyTimer = () => {
@@ -201,6 +206,7 @@ export default class App extends Component {
       setsList,
       currentBreakTime,
       isTimerRunning,
+      notifyMode,
       notifyStatus,
       editMode,
     } = this.state;
@@ -215,6 +221,8 @@ export default class App extends Component {
           timerPause={this.timerPause}
           timerStop={this.timerStop}
           addTime={this.addTime}
+          notifyMode={notifyMode}
+          changeNotifyMode={this.changeNotifyMode}
           notifyStatus={notifyStatus}
           startNotifyTimer={this.startNotifyTimer}
           stopNotifyTimer={this.stopNotifyTimer}
