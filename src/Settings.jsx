@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const Settings = ({
+  notifyMode,
+  changeNotifyMode,
   notifyStatus,
   startNotifyTimer,
   stopNotifyTimer,
@@ -9,8 +11,18 @@ const Settings = ({
   <div className="settings">
     <div className="mode">
       <p className="title">Mode</p>
-      <button className="sw checked">SW</button>
-      <button className="gym">Gym</button>
+      <button
+        onClick={() => { changeNotifyMode('sw'); }}
+        className={notifyMode === 'sw' ? 'sw checked' : 'sw'}
+      >
+        {'Sw'}
+      </button>
+      <button
+        onClick={() => { changeNotifyMode('gym'); }}
+        className={notifyMode === 'gym' ? 'gym checked' : 'gym'}
+      >
+        {'Gym'}
+      </button>
     </div>
     <div className="notifications">
       <button
@@ -30,6 +42,8 @@ const Settings = ({
 );
 
 Settings.propTypes = {
+  notifyMode: PropTypes.string.isRequired,
+  changeNotifyMode: PropTypes.func.isRequired,
   notifyStatus: PropTypes.bool.isRequired,
   startNotifyTimer: PropTypes.func.isRequired,
   stopNotifyTimer: PropTypes.func.isRequired,
