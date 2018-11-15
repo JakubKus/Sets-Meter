@@ -31,6 +31,13 @@ export default class App extends Component {
 
   componentDidMount() {
     this.focusSetEditor();
+    document.addEventListener('keydown', this.hideSetEditor, false);
+    document.addEventListener('keydown', this.toggleNotifyInstr, false);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.hideSetEditor, false);
+    document.removeEventListener('keydown', this.toggleNotifyInstr, false);
   }
 
   enterExercise = (input) => {
@@ -105,9 +112,13 @@ export default class App extends Component {
     this.setState({ notifyMode: mode });
   };
 
-  toggleNotifyInstr = () => {
+  toggleNotifyInstr = (e) => {
     const { showNotifyInstr } = this.state;
     this.setState({ showNotifyInstr: !showNotifyInstr });
+
+    if (e.keyCode === 27) {
+      this.setState({ showNotifyInstr: false });
+    }
   };
 
   startNotifyTimer = () => {
@@ -200,8 +211,10 @@ export default class App extends Component {
     }, () => this.focusSetEditor());
   };
 
-  hideSetEditor = () => {
-    this.setState({ showSetEditor: false, editMode: false });
+  hideSetEditor = (e) => {
+    if (e.keyCode === undefined || e.keyCode === 27) {
+      this.setState({ showSetEditor: false, editMode: false });
+    }
   };
 
   render() {
