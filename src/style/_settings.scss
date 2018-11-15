@@ -1,7 +1,7 @@
 @import 'colors';
 
 .settings {
-  align-items: center;
+  align-items: flex-end;
   display: flex;
 
   button {
@@ -10,6 +10,33 @@
 
     &.checked {
       border-bottom: 2px solid $colorYellow;
+    }
+  }
+
+  .instr {
+    background: $colorYellow;
+    border: 1px solid;
+    border-radius: 3px;
+    font-size: 12px;
+    line-height: .9;
+    margin: 0;
+    max-width: 125px;
+    padding: 5px 3px 3px;
+    position: absolute;
+    top: 24px;
+
+    @media (min-width: 330px) {
+      top: 25px;
+    }
+
+    @media (min-width: 360px) {
+      font-size: 13px;
+      top: 26px;
+    }
+
+    @media (min-width: 500px) {
+      font-size: 14px;
+      top: 31px;
     }
   }
 
@@ -53,15 +80,38 @@
   .notifications {
     margin-left: 5px;
 
-    img {
-      width: 20px;
+    button {
+      font-size: 0;
+      padding: 0 3px 3px;
 
-      @media (min-width: 330px) {
-        width: 21px;
+      &.info {
+        display: flex;
+        margin: 0 auto;
+        padding: 0 3px;
+
+        img {
+          width: 15px;
+
+          @media (min-width: 330px) {
+            width: 16px;
+          }
+
+          @media (min-width: 360px) {
+            width: 17px;
+          }
+        }
       }
 
-      @media (min-width: 360px) {
-        width: 24px;
+      img {
+        width: 20px;
+
+        @media (min-width: 330px) {
+          width: 21px;
+        }
+
+        @media (min-width: 360px) {
+          width: 24px;
+        }
       }
     }
   }

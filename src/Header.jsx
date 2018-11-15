@@ -12,6 +12,8 @@ const Header = ({
   addTime,
   notifyMode,
   changeNotifyMode,
+  showNotifyInstr,
+  toggleNotifyInstr,
   notifyStatus,
   startNotifyTimer,
   stopNotifyTimer,
@@ -30,6 +32,8 @@ const Header = ({
       <Settings
         notifyMode={notifyMode}
         changeNotifyMode={changeNotifyMode}
+        showNotifyInstr={showNotifyInstr}
+        toggleNotifyInstr={toggleNotifyInstr}
         notifyStatus={notifyStatus}
         startNotifyTimer={startNotifyTimer}
         stopNotifyTimer={stopNotifyTimer}
@@ -47,6 +51,8 @@ Header.propTypes = {
   addTime: PropTypes.func.isRequired,
   notifyMode: PropTypes.string.isRequired,
   changeNotifyMode: PropTypes.func.isRequired,
+  showNotifyInstr: PropTypes.bool.isRequired,
+  toggleNotifyInstr: PropTypes.func.isRequired,
   notifyStatus: PropTypes.bool.isRequired,
   startNotifyTimer: PropTypes.func.isRequired,
   stopNotifyTimer: PropTypes.func.isRequired,
