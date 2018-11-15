@@ -25,6 +25,7 @@ const Header = ({
         timerPause={timerPause}
         timerStop={timerStop}
         addTime={addTime}
+        notifyStatus={notifyStatus}
       />
       <Settings
         notifyMode={notifyMode}
