@@ -114,9 +114,9 @@ export default class App extends Component {
 
   toggleNotifyInstr = (e) => {
     const { showNotifyInstr } = this.state;
-    this.setState({ showNotifyInstr: !showNotifyInstr });
-
-    if (e.keyCode === 27) {
+    if (e.keyCode === undefined) {
+      this.setState({ showNotifyInstr: !showNotifyInstr });
+    } else if (e.keyCode === 27) {
       this.setState({ showNotifyInstr: false });
     }
   };
