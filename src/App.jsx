@@ -106,10 +106,10 @@ export default class App extends Component {
 
   startNotifyTimer = () => {
     this.setState({ notifyStatus: true });
-    const { setsList, breakTime } = this.state;
+    const { setsList, breakTime, notifyMode } = this.state;
     const options = {
       vibrate: 100,
-      data: { setsList, breakTime },
+      data: { setsList, breakTime, notifyMode },
       actions: [{ action: 'Exercises notification', title: 'Start' }],
     };
 
