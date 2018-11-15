@@ -16,6 +16,7 @@ export default class App extends Component {
       currentBreakTime: 120,
       isTimerRunning: false,
       notifyMode: 'sw',
+      showNotifyInstr: false,
       notifyStatus: false,
       editMode: false,
       editIndex: '',
@@ -102,6 +103,11 @@ export default class App extends Component {
 
   changeNotifyMode = (mode) => {
     this.setState({ notifyMode: mode });
+  };
+
+  toggleNotifyInstr = () => {
+    const { showNotifyInstr } = this.state;
+    this.setState({ showNotifyInstr: !showNotifyInstr });
   };
 
   startNotifyTimer = () => {
@@ -207,6 +213,7 @@ export default class App extends Component {
       currentBreakTime,
       isTimerRunning,
       notifyMode,
+      showNotifyInstr,
       notifyStatus,
       editMode,
     } = this.state;
@@ -223,6 +230,8 @@ export default class App extends Component {
           addTime={this.addTime}
           notifyMode={notifyMode}
           changeNotifyMode={this.changeNotifyMode}
+          showNotifyInstr={showNotifyInstr}
+          toggleNotifyInstr={this.toggleNotifyInstr}
           notifyStatus={notifyStatus}
           startNotifyTimer={this.startNotifyTimer}
           stopNotifyTimer={this.stopNotifyTimer}
