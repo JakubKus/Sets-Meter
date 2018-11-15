@@ -8,8 +8,21 @@ header {
   .container {
     align-items: center;
     display: flex;
+    height: 57px;
     justify-content: space-evenly;
     margin: auto;
     max-width: 450px;
+
+    @media (min-width: 330px){
+      height: 60px;
+    }
+
+    @media (min-width: 360px){
+      height: 64px;
+    }
+
+    @media (min-width: 500px){
+      height: 69px;
+    }
   }
 }

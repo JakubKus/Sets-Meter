@@ -8,6 +8,7 @@ const Timer = ({
   timerPause,
   timerStop,
   addTime,
+  notifyStatus,
 }) => {
   const arrow = isTimerRunning ? 'invisible' : '';
   const breakMins = Math.floor(currentBreakTime / 60);
@@ -15,7 +16,7 @@ const Timer = ({
   const breakSecs = currentBreakTime - (breakMins * 60) - (breakTenSecs * 10);
 
   return (
-    <div className="timer">
+    <div className={notifyStatus ? 'timer hidden' : 'timer'}>
       <div className="controlButtons">
         <button
           onClick={timerStart}
@@ -123,6 +124,7 @@ Timer.propTypes = {
   timerPause: PropTypes.func.isRequired,
   timerStop: PropTypes.func.isRequired,
   addTime: PropTypes.func.isRequired,
+  notifyStatus: PropTypes.bool.isRequired,
 };
 
 export default Timer;
