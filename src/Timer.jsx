@@ -9,6 +9,7 @@ const Timer = ({
   timerStop,
   addTime,
   notifyStatus,
+  gaEvent,
 }) => {
   const arrow = isTimerRunning ? 'invisible' : '';
   const breakMins = Math.floor(currentBreakTime / 60);
@@ -19,103 +20,102 @@ const Timer = ({
     <div className={notifyStatus ? 'timer hidden' : 'timer'}>
       <div className="controlButtons">
         <button
-          onClick={timerStart}
+          onClick={() => {
+            gaEvent('Timer', 'Start');
+            timerStart();
+          }}
           className="start"
         >
-          <img
-            src="start.svg"
-            alt="start"
-          />
+          <img src="start.svg" alt="start" />
         </button>
         <button
-          onClick={timerPause}
+          onClick={() => {
+            gaEvent('Timer', 'Pause');
+            timerPause();
+          }}
           className="pause"
         >
-          <img
-            src="pause.svg"
-            alt="pause"
-          />
+          <img src="pause.svg" alt="pause" />
         </button>
         <button
-          onClick={timerStop}
+          onClick={() => {
+            gaEvent('Timer', 'Stop');
+            timerStop();
+          }}
           className="stop"
         >
-          <img
-            src="stop.svg"
-            alt="stop"
-          />
+          <img src="stop.svg" alt="stop" />
         </button>
       </div>
       <div className="time">
         <span className="mins">
           <button
-            onClick={() => { addTime(60); }}
+            onClick={() => {
+              gaEvent('Timer', 'Increased time by 1 minute');
+              addTime(60);
+            }}
             className={arrow}
           >
-            <img
-              src="arrow-up.svg"
-              alt="up"
-            />
+            <img src="arrow-up.svg" alt="up" />
           </button>
           {breakMins}
           <button
-            onClick={() => { addTime(-60); }}
+            onClick={() => {
+              gaEvent('Timer', 'Decreased time by 1 minute');
+              addTime(-60);
+            }}
             className={arrow}
           >
-            <img
-              src="arrow-down.svg"
-              alt="down"
-            />
+            <img src="arrow-down.svg" alt="down" />
           </button>
         </span>
         <span>:</span>
         <span className="tenSecs">
           <button
-            onClick={() => { addTime(10); }}
+            onClick={() => {
+              gaEvent('Timer', 'Increased time by 10 seconds');
+              addTime(10);
+            }}
             className={arrow}
           >
-            <img
-              src="arrow-up.svg"
-              alt="up"
-            />
+            <img src="arrow-up.svg" alt="up" />
           </button>
           {breakTenSecs}
           <button
-            onClick={() => { addTime(-10); }}
+            onClick={() => {
+              gaEvent('Timer', 'Decreased time by 10 seconds');
+              addTime(-10);
+            }}
             className={arrow}
           >
-            <img
-              src="arrow-down.svg"
-              alt="down"
-            />
+            <img src="arrow-down.svg" alt="down" />
           </button>
         </span>
         <span className="secs">
           <button
-            onClick={() => { addTime(1); }}
+            onClick={() => {
+              gaEvent('Timer', 'Increased time by 1 second');
+              addTime(1);
+            }}
             className={arrow}
           >
-            <img
-              src="arrow-up.svg"
-              alt="up"
-            />
+            <img src="arrow-up.svg" alt="up" />
           </button>
           {breakSecs}
           <button
-            onClick={() => { addTime(-1); }}
+            onClick={() => {
+              gaEvent('Timer', 'Decreased time by 1 second');
+              addTime(-1);
+            }}
             className={arrow}
           >
-            <img
-              src="arrow-down.svg"
-              alt="down"
-            />
+            <img src="arrow-down.svg" alt="down" />
           </button>
         </span>
       </div>
     </div>
   );
 };
-
 
 Timer.propTypes = {
   currentBreakTime: PropTypes.number.isRequired,
@@ -125,6 +125,7 @@ Timer.propTypes = {
   timerStop: PropTypes.func.isRequired,
   addTime: PropTypes.func.isRequired,
   notifyStatus: PropTypes.bool.isRequired,
+  gaEvent: PropTypes.func.isRequired,
 };
 
 export default Timer;

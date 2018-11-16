@@ -6,6 +6,7 @@ const Sets = ({
   decreaseSetsNum,
   editSet,
   deleteSet,
+  gaEvent,
 }) => (
   <div className="sets">
     {
@@ -13,7 +14,10 @@ const Sets = ({
         <div className="set" key={index}>
           <div className="setsLeft">
             <button
-              onClick={() => { decreaseSetsNum(index); }}
+              onClick={() => {
+                gaEvent('Sets', 'Decreased sets number');
+                decreaseSetsNum(index);
+              }}
               className={set.setsNum > 1 ? 'decrease' : 'decrease invisible'}
               disabled={set.setsNum < 2}
             >
@@ -23,10 +27,22 @@ const Sets = ({
             <span>Left</span>
           </div>
           <span className="exerciseName">{set.exercise}</span>
-          <button className="setEdit" onClick={() => { editSet(index); }}>
+          <button
+            onClick={() => {
+              gaEvent('Sets', 'Clicked edit button');
+              editSet(index);
+            }}
+            className="setEdit"
+          >
             <img src="edit.svg" alt="edit" />
           </button>
-          <button className="setDone" onClick={() => { deleteSet(index); }}>
+          <button
+            onClick={() => {
+              gaEvent('Sets', 'Clicked delete button');
+              deleteSet(index);
+            }}
+            className="setDone"
+          >
             <img src="delete.svg" alt="delete" />
           </button>
         </div>
@@ -40,6 +56,7 @@ Sets.propTypes = {
   decreaseSetsNum: PropTypes.func.isRequired,
   editSet: PropTypes.func.isRequired,
   deleteSet: PropTypes.func.isRequired,
+  gaEvent: PropTypes.func.isRequired,
 };
 
 export default Sets;

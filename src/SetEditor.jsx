@@ -15,12 +15,17 @@ const SetEditor = ({
   editMode,
   addEditedSet,
   hideSetEditor,
+  gaEvent,
 }) => {
   const numberButtons = [3, 6, 9];
+
   return (
     <div className={showSetEditor ? 'setEditor on' : 'setEditor off'}>
       <button
-        onClick={hideSetEditor}
+        onClick={() => {
+          hideSetEditor();
+          gaEvent('Set Editor', 'Closed SetEditor width close button');
+        }}
         className="close"
       >
         <img src="close.svg" alt="close" />
@@ -35,6 +40,7 @@ const SetEditor = ({
         <button
           onClick={(e) => {
             e.preventDefault();
+            gaEvent('Set Editor', 'Added set with Next');
             addSet();
             clearSetEditor();
             focusSetEditor();
@@ -47,6 +53,7 @@ const SetEditor = ({
         <button
           onClick={(e) => {
             e.preventDefault();
+            gaEvent('Set Editor', 'Added set with Done');
             addSet();
             clearSetEditor();
             hideSetEditor();
@@ -57,7 +64,9 @@ const SetEditor = ({
           {'Done'}
         </button>
         <button
-          onClick={() => {
+          onClick={(e) => {
+            e.preventDefault();
+            gaEvent('Set Editor', 'Modified set');
             addEditedSet();
             clearSetEditor();
             hideSetEditor();
@@ -112,6 +121,7 @@ SetEditor.propTypes = {
   editMode: PropTypes.bool.isRequired,
   addEditedSet: PropTypes.func.isRequired,
   hideSetEditor: PropTypes.func.isRequired,
+  gaEvent: PropTypes.func.isRequired,
 };
 
 export default SetEditor;
