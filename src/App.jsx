@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactGA from 'react-ga';
 import './style/index.scss';
 import SetEditor from './SetEditor';
 import Header from './Header';
@@ -114,7 +115,7 @@ export default class App extends Component {
 
   toggleNotifyInstr = (e) => {
     const { showNotifyInstr } = this.state;
-    if (e.keyCode === undefined) {
+    if (e === undefined || e.keyCode === undefined) {
       this.setState({ showNotifyInstr: !showNotifyInstr });
     } else if (e.keyCode === 27) {
       this.setState({ showNotifyInstr: false });
@@ -217,6 +218,10 @@ export default class App extends Component {
     }
   };
 
+  gaEvent = (component, action) => {
+    ReactGA.event({ category: component, action });
+  };
+
   render() {
     const {
       showSetEditor,
@@ -248,6 +253,7 @@ export default class App extends Component {
           notifyStatus={notifyStatus}
           startNotifyTimer={this.startNotifyTimer}
           stopNotifyTimer={this.stopNotifyTimer}
+          gaEvent={this.gaEvent}
         />
         <div className={blur} />
         <SetEditor
@@ -263,15 +269,22 @@ export default class App extends Component {
           editMode={editMode}
           addEditedSet={this.addEditedSet}
           hideSetEditor={this.hideSetEditor}
+          gaEvent={this.gaEvent}
         />
         <Sets
           setsList={setsList}
           decreaseSetsNum={this.decreaseSetsNum}
           editSet={this.editSet}
           deleteSet={this.deleteSet}
+          gaEvent={this.gaEvent}
         />
         <div className="addSetButton">
-          <button onClick={this.showSetEditor}>
+          <button
+            onClick={() => {
+              this.gaEvent('App', 'Clicked add set button');
+              this.showSetEditor();
+            }}
+          >
             <img src="add.svg" alt="add" />
           </button>
         </div>
