@@ -212,7 +212,7 @@ export default class App extends Component {
   };
 
   hideSetEditor = (e) => {
-    if (e.keyCode === undefined || e.keyCode === 27) {
+    if (e === undefined || e.keyCode === undefined || e.keyCode === 27) {
       this.setState({ showSetEditor: false, editMode: false });
     }
   };

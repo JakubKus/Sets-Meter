@@ -17,10 +17,10 @@ const Sets = ({
               className={set.setsNum > 1 ? 'decrease' : 'decrease invisible'}
               disabled={set.setsNum < 2}
             >
-              <img src="arrow-down.svg" alt="down" />
+              <img src="arrow-down.svg" alt="set down" />
             </button>
             <span className="num">{set.setsNum}</span>
-            <span>left</span>
+            <span>Left</span>
           </div>
           <span className="exerciseName">{set.exercise}</span>
           <button className="setEdit" onClick={() => { editSet(index); }}>
