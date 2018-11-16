@@ -41,7 +41,7 @@ const Sets = ({
               gaEvent('Sets', 'Clicked delete button');
               deleteSet(index);
             }}
-            className="setDone"
+            className="setDelete"
           >
             <img src="delete.svg" alt="delete" />
           </button>
