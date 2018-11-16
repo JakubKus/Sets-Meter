@@ -17,6 +17,7 @@ const Header = ({
   notifyStatus,
   startNotifyTimer,
   stopNotifyTimer,
+  gaEvent,
 }) => (
   <header>
     <div className="container">
@@ -28,6 +29,7 @@ const Header = ({
         timerStop={timerStop}
         addTime={addTime}
         notifyStatus={notifyStatus}
+        gaEvent={gaEvent}
       />
       <Settings
         notifyMode={notifyMode}
@@ -37,6 +39,7 @@ const Header = ({
         notifyStatus={notifyStatus}
         startNotifyTimer={startNotifyTimer}
         stopNotifyTimer={stopNotifyTimer}
+        gaEvent={gaEvent}
       />
     </div>
   </header>
@@ -56,6 +59,7 @@ Header.propTypes = {
   notifyStatus: PropTypes.bool.isRequired,
   startNotifyTimer: PropTypes.func.isRequired,
   stopNotifyTimer: PropTypes.func.isRequired,
+  gaEvent: PropTypes.func.isRequired,
 };
 
 export default Header;
