@@ -3,6 +3,7 @@ import { render, fireEvent, cleanup } from 'react-testing-library';
 import App from '../App';
 
 afterEach(cleanup);
+jest.mock("react-ga");
 
 test('inserts `exercise` with Next button, with default setsNumber and generates it properly', () => {
   const { container, getByPlaceholderText, getByText } = render(<App />);
