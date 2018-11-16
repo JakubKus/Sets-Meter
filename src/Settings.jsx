@@ -9,24 +9,34 @@ const Settings = ({
   notifyStatus,
   startNotifyTimer,
   stopNotifyTimer,
+  gaEvent,
 }) => (
   <div className="settings">
     <p
+      onClick={() => {
+        gaEvent('Settings', 'Hidden instructions text box by clicking on them');
+        toggleNotifyInstr();
+      }}
       className={showNotifyInstr ? 'instr' : 'instr hidden'}
-      onClick={toggleNotifyInstr}
     >
       {'Click the bell to receive a notification when the break ends'}
     </p>
     <div className="mode">
       <p className="title">Mode</p>
       <button
-        onClick={() => { changeNotifyMode('sw'); }}
+        onClick={() => {
+          gaEvent('Settings', 'Switched notify mode to sw');
+          changeNotifyMode('sw');
+        }}
         className={notifyMode === 'sw' ? 'sw checked' : 'sw'}
       >
         {'Sw'}
       </button>
       <button
-        onClick={() => { changeNotifyMode('gym'); }}
+        onClick={() => {
+          gaEvent('Settings', 'Switched notify mode to gym');
+          changeNotifyMode('gym');
+        }}
         className={notifyMode === 'gym' ? 'gym checked' : 'gym'}
       >
         {'Gym'}
@@ -34,19 +44,28 @@ const Settings = ({
     </div>
     <div className="notifications">
       <button
-        onClick={toggleNotifyInstr}
+        onClick={() => {
+          gaEvent('Settings', 'Clicked on info button');
+          toggleNotifyInstr();
+        }}
         className="info"
       >
         <img src="info.svg" alt="info" />
       </button>
       <button
-        onClick={startNotifyTimer}
+        onClick={() => {
+          gaEvent('Settings', 'Started notify timer');
+          startNotifyTimer();
+        }}
         className={notifyStatus ? 'on checked' : 'on'}
       >
         <img src="notifications-on.svg" alt="notifications on" />
       </button>
       <button
-        onClick={stopNotifyTimer}
+        onClick={() => {
+          gaEvent('Settings', 'Stopped notify timer');
+          stopNotifyTimer();
+        }}
         className={!notifyStatus ? 'off checked' : 'off'}
       >
         <img src="notifications-off.svg" alt="notifications off" />
@@ -63,6 +82,7 @@ Settings.propTypes = {
   notifyStatus: PropTypes.bool.isRequired,
   startNotifyTimer: PropTypes.func.isRequired,
   stopNotifyTimer: PropTypes.func.isRequired,
+  gaEvent: PropTypes.func.isRequired,
 };
 
 export default Settings;
