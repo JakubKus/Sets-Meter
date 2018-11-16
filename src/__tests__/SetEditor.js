@@ -3,6 +3,7 @@ import { render, fireEvent, cleanup } from 'react-testing-library';
 import App from '../App';
 
 afterEach(cleanup);
+jest.mock("react-ga");
 
 test('SetEditor is open from the beginning', () => {
   const { container } = render(<App />);

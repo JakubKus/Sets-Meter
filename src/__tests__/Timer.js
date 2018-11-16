@@ -3,6 +3,7 @@ import { render, fireEvent, cleanup } from 'react-testing-library';
 import App from '../App';
 
 afterEach(cleanup);
+jest.mock("react-ga");
 
 test('adds 1 minute and 14 seconds', () => {
   const { container } = render(<App />);

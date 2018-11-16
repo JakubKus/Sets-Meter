@@ -3,6 +3,7 @@ import { render, fireEvent, cleanup } from 'react-testing-library';
 import App from '../App';
 
 afterEach(cleanup);
+jest.mock("react-ga");
 
 test('switches to gym mode', () => {
   const { getByText, container } = render(<App />);
