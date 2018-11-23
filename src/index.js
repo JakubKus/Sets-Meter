@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import WebFont from 'webfontloader';
 import ReactGA from 'react-ga';
-import App from './App';
+import App from './components/App/App';
 
 WebFont.load({
   google: {
