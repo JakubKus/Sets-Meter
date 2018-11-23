@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Timer from './Timer';
-import Settings from './Settings';
+import Timer from '../Timer/Timer';
+import Settings from '../Settings/Settings';
 
 const Header = ({
   currentBreakTime,
