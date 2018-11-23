@@ -1,0 +1,43 @@
+@import '../../colors';
+
+button {
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+
+.hidden {
+  display: none;
+}
+
+.blur {
+
+  &.on {
+    background-color: #000000;
+    height: 100%;
+    opacity: 0.4;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    z-index: 1;
+  }
+}
+
+.addSetButton {
+  font-size: 0;
+  margin: 0;
+  position: fixed;
+  right: 15px; bottom: 15px;
+
+  button {
+    background: transparent;
+    font-size: 0;
+    padding: 0;
+
+    img {
+      background: $colorPurple;
+      border-radius: 50px;
+      width: 50px;
+    }
+  }
+}
