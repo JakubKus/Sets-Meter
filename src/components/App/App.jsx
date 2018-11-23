@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import ReactGA from 'react-ga';
-import './style/index.scss';
-import SetEditor from './SetEditor';
-import Header from './Header';
-import Sets from './Sets';
+import '../../index.scss';
+import SetEditor from '../SetEditor/SetEditor';
+import Header from '../Header/Header';
+import Sets from '../Sets/Sets';
 
 export default class App extends Component {
   constructor(props) {
