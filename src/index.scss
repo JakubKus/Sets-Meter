@@ -1,0 +1,27 @@
+@import './components/App/app';
+@import './components/Header/header';
+@import './components/SetEditor/setEditor';
+@import './components/Sets/sets';
+@import './components/Settings/settings';
+@import './components/Timer/timer';
+@import 'colors';
+
+body {
+  background: $colorBlue;
+  font-family: 'PT Mono', sans-serif;
+  margin: 0;
+  padding-top: 67px;
+  text-align: center;
+
+  @media (min-width: 330px){
+    padding-top: 70px;
+  }
+
+  @media (min-width: 360px){
+    padding-top: 74px;
+  }
+
+  @media (min-width: 500px){
+    padding-top: 79px;
+  }
+}
