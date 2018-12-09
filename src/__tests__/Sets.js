@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent, cleanup } from 'react-testing-library';
-import App from '../App';
+import App from '../components/App/App';
 
 afterEach(cleanup);
 jest.mock("react-ga");
@@ -55,7 +55,7 @@ test('decreases left sets number', () => {
   fireEvent.change(setEditorInput, { target: { value: 'exercise' } });
   fireEvent.click(button4);
   fireEvent.click(doneButton);
-  const subtractSet = getByAltText('set down');
+  const subtractSet = getByAltText('arrow down');
 
   fireEvent.click(subtractSet);
   fireEvent.click(subtractSet);

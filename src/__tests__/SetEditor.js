@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent, cleanup } from 'react-testing-library';
-import App from '../App';
+import App from '../components/App/App';
 
 afterEach(cleanup);
 jest.mock("react-ga");
