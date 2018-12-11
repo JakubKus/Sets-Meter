@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import ReactGA from 'react-ga';
-import '../../index.scss';
-import SetEditor from '../SetEditor/SetEditor';
 import Header from '../Header/Header';
+import TimerButtons from '../TimerButtons/TimerButtons';
+import Timer from '../Timer/Timer';
+import NotifySettings from '../NotifySettings/NotifySettings';
+import SetEditor from '../SetEditor/SetEditor';
 import Sets from '../Sets/Sets';
+import '../../index.scss';
 
 export default class App extends Component {
   constructor(props) {
@@ -13,9 +16,11 @@ export default class App extends Component {
       enteredExercise: '',
       enteredSetsNum: 1,
       setsList: [],
+      showTimerButtons: false,
       breakTime: 120,
       currentBreakTime: 120,
       isTimerRunning: false,
+      showNotifySettings: false,
       notifyMode: 'sw',
       showNotifyInstr: false,
       notifyStatus: false,
@@ -68,8 +73,19 @@ export default class App extends Component {
     this.setState({ setsList });
   };
 
+  toggleTimerButtons = () => {
+    const { showTimerButtons } = this.state;
+    this.setState({ showTimerButtons: !showTimerButtons });
+  };
+
+  toggleNotifySettings = () => {
+    const { showNotifySettings } = this.state;
+    this.setState({ showNotifySettings: !showNotifySettings });
+  };
+
   timerStart = () => {
     const { isTimerRunning } = this.state;
+
     if (!isTimerRunning) {
       this.setState({ isTimerRunning: true });
       this.timer = setInterval(() => {
@@ -115,6 +131,7 @@ export default class App extends Component {
 
   toggleNotifyInstr = (e) => {
     const { showNotifyInstr } = this.state;
+
     if (e === undefined || e.keyCode === undefined) {
       this.setState({ showNotifyInstr: !showNotifyInstr });
     } else if (e.keyCode === 27) {
@@ -169,7 +186,6 @@ export default class App extends Component {
   editSet = (index) => {
     const { setsList } = this.state;
     const set = setsList[index];
-
     this.setState({
       showSetEditor: true,
       editMode: true,
@@ -218,6 +234,10 @@ export default class App extends Component {
     }
   };
 
+  resetSets = () => {
+    this.setState({ setsList: [] });
+  };
+
   gaEvent = (component, action) => {
     ReactGA.event({ category: component, action });
   };
@@ -228,8 +248,10 @@ export default class App extends Component {
       enteredExercise,
       enteredSetsNum,
       setsList,
+      showTimerButtons,
       currentBreakTime,
       isTimerRunning,
+      showNotifySettings,
       notifyMode,
       showNotifyInstr,
       notifyStatus,
@@ -240,12 +262,35 @@ export default class App extends Component {
     return (
       <main>
         <Header
+          showTimerButtons={showTimerButtons}
+          toggleTimerButtons={this.toggleTimerButtons}
+          resetSets={this.resetSets}
+          showNotifySettings={showNotifySettings}
+          toggleNotifySettings={this.toggleNotifySettings}
+        />
+        <TimerButtons
+          showTimerButtons={showTimerButtons}
           currentBreakTime={currentBreakTime}
           isTimerRunning={isTimerRunning}
           timerStart={this.timerStart}
           timerPause={this.timerPause}
           timerStop={this.timerStop}
           addTime={this.addTime}
+          gaEvent={this.gaEvent}
+        />
+        <Timer
+          showTimerButtons={showTimerButtons}
+          showNotifySettings={showNotifySettings}
+          currentBreakTime={currentBreakTime}
+          isTimerRunning={isTimerRunning}
+          timerStart={this.timerStart}
+          timerPause={this.timerPause}
+          timerStop={this.timerStop}
+          addTime={this.addTime}
+          gaEvent={this.gaEvent}
+        />
+        <NotifySettings
+          showNotifySettings={showNotifySettings}
           notifyMode={notifyMode}
           changeNotifyMode={this.changeNotifyMode}
           showNotifyInstr={showNotifyInstr}
