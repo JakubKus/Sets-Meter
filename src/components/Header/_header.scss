@@ -1,28 +1,37 @@
 @import '../../colors';
 
 header {
+  align-items: center;
   background: $colorPurple;
-  position: fixed;
-  top: 0; left: 0; right: 0;
+  box-shadow: 0 2px 2px -1px #000;
+  display: flex;
+  height: 55px;
+  justify-content: space-between;
+  padding: 0 5px;
+  position: relative;
+  z-index: 1;
 
-  .container {
-    align-items: center;
-    display: flex;
-    height: 57px;
-    justify-content: space-evenly;
-    margin: auto;
-    max-width: 450px;
 
-    @media (min-width: 330px){
-      height: 60px;
+  img {
+    background: $colorYellow;
+    border-radius: 20px;
+    cursor: pointer;
+    padding: 2px;
+    transition: 0.3s;
+
+    &:hover, &.active {
+      background: $colorBlue;
     }
 
-    @media (min-width: 360px){
-      height: 64px;
+    &.active:hover{
+      background: $colorYellow;
     }
+  }
 
-    @media (min-width: 500px){
-      height: 69px;
-    }
+  h1.pageTitle {
+    color: $colorYellow;
+    cursor: pointer;
+    font-size: 35px;
+    margin: 0;
   }
 }

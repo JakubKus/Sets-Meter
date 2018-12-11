@@ -1,99 +1,65 @@
 @import '../../colors';
 
-.timer {
+@keyframes appear {
+  0% { top: -70px; height: 0; padding: 0; }
+  100% { top: 0; }
+}
 
-  button {
-    border: none;
-    font-size: 0;
+@keyframes disappear {
+  0% { top: 0; }
+  100% { top: -70px; height: 0; padding: 0; }
+}
+
+.timer {
+  animation: appear 0.9s;
+  animation-fill-mode: forwards;
+  background: #582a72;
+  border-radius: 0 0 10px 10px;
+  box-shadow: 0 2px 2px -1px #000;
+  display: inline-block;
+  padding-top: 6px;
+  position: relative;
+  top: 0;
+  vertical-align: top;
+  width: calc(100% / 3.8);
+
+  &.off {
+    animation: disappear 0.9s ease-in;
+    animation-fill-mode: forwards;
   }
 
-  .controlButtons {
+  span {
+    color: $colorYellow;
     display: inline-block;
+    font-size: 16px;
     vertical-align: middle;
 
+    @media (min-width: 330px) {
+      font-size: 18px;
+    }
+
+    @media (min-width: 360px) {
+      font-size: 21px;
+    }
+
+    @media (min-width: 500px) {
+      font-size: 23px;
+    }
+
     button {
-      background: $colorYellow;
-      border-radius: 4px;
-      margin: 3px;
-      width: 30px;
-
-      @media (min-width: 330px) {
-        width: 32px;
-      }
-
-      @media (min-width: 360px) {
-        width: 34px;
-      }
-
-      @media (min-width: 500px) {
-        width: 42px;
-      }
+      background: transparent;
+      display: block;
+      padding: 0 4px;
 
       img {
-        width: 18px;
+        width: 14px;
 
         @media (min-width: 330px) {
-          width: 19px;
+          width: 16px;
         }
 
         @media (min-width: 360px) {
-          width: 20px;
-        }
-
-        @media (min-width: 500px) {
-          width: 24px;
-        }
-      }
-    }
-  }
-
-  .time {
-    display: inline-block;
-    margin: 3px;
-    vertical-align: middle;
-
-    @media (min-width: 500px) {
-      margin: 3px 6px;
-    }
-
-    .invisible {
-      visibility: hidden;
-    }
-
-    span {
-      color: $colorYellow;
-      display: inline-block;
-      font-size: 15px;
-      vertical-align: middle;
-
-      @media (min-width: 330px) {
-        font-size: 16px;
-      }
-
-      @media (min-width: 360px) {
-        font-size: 18px;
-      }
-
-      @media (min-width: 500px) {
-        font-size: 23px;
-      }
-
-      button {
-        background: transparent;
-        display: block;
-        margin: 0 2px;
-        padding: 2px;
-
-        img {
-          width: 13px;
-
-          @media (min-width: 330px) {
-            width: 14px;
-          }
-
-          @media (min-width: 360px) {
-            width: 15px;
-          }
+          width: 19px;
         }
       }
     }
