@@ -1,43 +1,55 @@
 @import '../../colors';
 
-button {
-  border: none;
-  cursor: pointer;
-  outline: none;
-}
-
-.hidden {
-  display: none;
-}
-
-.blur {
-
-  &.on {
-    background-color: #000000;
-    height: 100%;
-    opacity: 0.4;
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%;
-    z-index: 1;
-  }
-}
-
-.addSetButton {
+main {
   font-size: 0;
-  margin: 0;
-  position: fixed;
-  right: 15px; bottom: 15px;
 
   button {
-    background: transparent;
-    font-size: 0;
-    padding: 0;
+    border: none;
+    cursor: pointer;
+    outline: none;
+  }
 
-    img {
-      background: $colorPurple;
-      border-radius: 50px;
-      width: 50px;
+  .hidden {
+    display: none;
+  }
+
+  .blur {
+
+    &.on {
+      background-color: #000000;
+      height: 100%;
+      left: 0;
+      opacity: 0.4;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1;
+    }
+  }
+
+  .addSetButton {
+    bottom: 15px;
+    font-size: 0;
+    margin: 0;
+    position: fixed;
+    right: 15px;
+
+    button {
+      background: transparent;
+      font-size: 0;
+      padding: 0;
+
+      img {
+        background: $colorPurple;
+        border-radius: 50px;
+        box-shadow: 2px 2px 2px -1px #000;
+        transition: 0.3s;
+        width: 50px;
+
+        &:hover {
+          background: $colorYellow;
+        }
+      }
     }
   }
 }
