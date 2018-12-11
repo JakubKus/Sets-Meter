@@ -1,65 +1,36 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Timer from '../Timer/Timer';
-import Settings from '../Settings/Settings';
 
 const Header = ({
-  currentBreakTime,
-  isTimerRunning,
-  timerStart,
-  timerPause,
-  timerStop,
-  addTime,
-  notifyMode,
-  changeNotifyMode,
-  showNotifyInstr,
-  toggleNotifyInstr,
-  notifyStatus,
-  startNotifyTimer,
-  stopNotifyTimer,
-  gaEvent,
+  showTimerButtons,
+  toggleTimerButtons,
+  resetSets,
+  showNotifySettings,
+  toggleNotifySettings,
 }) => (
   <header>
-    <div className="container">
-      <Timer
-        currentBreakTime={currentBreakTime}
-        isTimerRunning={isTimerRunning}
-        timerStart={timerStart}
-        timerPause={timerPause}
-        timerStop={timerStop}
-        addTime={addTime}
-        notifyStatus={notifyStatus}
-        gaEvent={gaEvent}
-      />
-      <Settings
-        notifyMode={notifyMode}
-        changeNotifyMode={changeNotifyMode}
-        showNotifyInstr={showNotifyInstr}
-        toggleNotifyInstr={toggleNotifyInstr}
-        notifyStatus={notifyStatus}
-        startNotifyTimer={startNotifyTimer}
-        stopNotifyTimer={stopNotifyTimer}
-        gaEvent={gaEvent}
-      />
-    </div>
+    <img
+      className={showTimerButtons ? 'clock active' : 'clock'}
+      onClick={toggleTimerButtons}
+      src="clock.svg"
+      alt="clock"
+    />
+    <h1 className="pageTitle" onClick={resetSets}>Sets Meter</h1>
+    <img
+      className={showNotifySettings ? 'bell active' : 'bell'}
+      onClick={toggleNotifySettings}
+      src="bell.svg"
+      alt="bell"
+    />
   </header>
 );
 
 Header.propTypes = {
-  currentBreakTime: PropTypes.number.isRequired,
-  isTimerRunning: PropTypes.bool.isRequired,
-  timerStart: PropTypes.func.isRequired,
-  timerPause: PropTypes.func.isRequired,
-  timerStop: PropTypes.func.isRequired,
-  addTime: PropTypes.func.isRequired,
-  notifyMode: PropTypes.string.isRequired,
-  changeNotifyMode: PropTypes.func.isRequired,
-  showNotifyInstr: PropTypes.bool.isRequired,
-  toggleNotifyInstr: PropTypes.func.isRequired,
-  notifyStatus: PropTypes.bool.isRequired,
-  startNotifyTimer: PropTypes.func.isRequired,
-  stopNotifyTimer: PropTypes.func.isRequired,
-  gaEvent: PropTypes.func.isRequired,
+  showTimerButtons: PropTypes.bool.isRequired,
+  toggleTimerButtons: PropTypes.func.isRequired,
+  resetSets: PropTypes.func.isRequired,
+  showNotifySettings: PropTypes.bool.isRequired,
+  toggleNotifySettings: PropTypes.func.isRequired,
 };
 
 export default Header;
