@@ -32,7 +32,7 @@ test('selects a setsNumber', () => {
 });
 
 test('hides setEditor with x button', () => {
-  const { getByAltText, container} = render(<App />);
+  const { container, getByAltText } = render(<App />);
   const closeButton = getByAltText('close');
 
   fireEvent.click(closeButton);
@@ -41,7 +41,7 @@ test('hides setEditor with x button', () => {
 });
 
 test('hides setEditor with "esc" key', () => {
-  const { container} = render(<App />);
+  const { container } = render(<App />);
   const onKeyDown = jest.fn();
   const escInput = render(<input onKeyDown={onKeyDown} />).container;
   const escKey = escInput.getElementsByTagName('input')[0];
