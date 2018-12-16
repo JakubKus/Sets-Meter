@@ -12,7 +12,7 @@ test('renders without errors', () => {
 });
 
 test('opens SetEditor by clicking on the addSetButton', () => {
-  const { getByAltText, container } = render(<App />);
+  const { container, getByAltText } = render(<App />);
   const addSetButton = getByAltText('add');
 
   fireEvent.click(addSetButton);
