@@ -47,7 +47,6 @@ test('decreases left sets number', () => {
     getByPlaceholderText,
     queryAllByText,
     getByText,
-    getByAltText,
   } = render(<App />);
   const setEditorInput = getByPlaceholderText('Enter exercise');
   const doneButton = queryAllByText('Done')[0];
@@ -55,7 +54,7 @@ test('decreases left sets number', () => {
   fireEvent.change(setEditorInput, { target: { value: 'exercise' } });
   fireEvent.click(button4);
   fireEvent.click(doneButton);
-  const subtractSet = getByAltText('arrow down');
+  const subtractSet = container.querySelector('.sets .set .setsLeft .decrease img');
 
   fireEvent.click(subtractSet);
   fireEvent.click(subtractSet);
