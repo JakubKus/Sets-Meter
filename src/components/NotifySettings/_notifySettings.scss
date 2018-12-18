@@ -71,7 +71,7 @@
   font-size: 13px;
   line-height: .9;
   margin: 0;
-  padding: 5px;
+  padding: 10px;
   position: absolute;
   right: 0;
   text-align: left;
@@ -90,6 +90,11 @@
     @media (min-width: 330px) {
       top: -210px;
     }
+  }
+
+  ul {
+    margin: 0;
+    padding: 0 0 0 18px;
   }
 
   hr {
