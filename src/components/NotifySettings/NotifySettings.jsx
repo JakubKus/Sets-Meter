@@ -81,12 +81,13 @@ const NotifySettings = ({
         className={showNotifyInstr && showNotifySettings ? 'instr' : 'instr off'}
       >
         {'Select training mode to change order of notifications'}
+        <ul>
+          <li>Sw: exercise after exercise in the circuit</li>
+          <li>Gym: set after set, exercise after exercise</li>
+        </ul>
         <hr />
-        {'Sw: exercise after exercise in the circuit'}
-        <hr />
-        {'Gym: set after set, exercise after exercise'}
-        <hr />
-        {'Click the bell to receive a notification when the break ends'}
+        {'Select \'On\' to receive a notification when the break ends or'
+        + ' \'Off\' to stop them'}
       </article>
     </>
   );
