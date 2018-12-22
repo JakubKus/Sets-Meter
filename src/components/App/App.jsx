@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import ReactGA from 'react-ga';
+import { withCookies, Cookies } from 'react-cookie';
+import PropTypes from 'prop-types';
 import Header from '../Header/Header';
 import TimerButtons from '../TimerButtons/TimerButtons';
 import Timer from '../Timer/Timer';
@@ -8,20 +10,22 @@ import SetEditor from '../SetEditor/SetEditor';
 import Sets from '../Sets/Sets';
 import '../../index.scss';
 
-export default class App extends Component {
+class App extends Component {
   constructor(props) {
     super(props);
+    const { cookies } = props;
+
     this.state = {
       showSetEditor: true,
       enteredExercise: '',
       enteredSetsNum: 1,
-      setsList: [],
+      setsList: cookies.get('setsList') || [],
       showTimerButtons: false,
-      breakTime: 120,
-      currentBreakTime: 120,
+      breakTime: +cookies.get('breakTime') || 120,
+      currentBreakTime: +cookies.get('breakTime') || 120,
       isTimerRunning: false,
       showNotifySettings: false,
-      notifyMode: 'sw',
+      notifyMode: cookies.get('notifyMode') || 'sw',
       showNotifyInstr: false,
       notifyStatus: false,
       editMode: false,
@@ -71,6 +75,7 @@ export default class App extends Component {
       setsNum: enteredSetsNum,
     });
     this.setState({ setsList });
+    this.setCookie('setsList', setsList);
   };
 
   toggleTimerButtons = () => {
@@ -118,15 +123,18 @@ export default class App extends Component {
 
     if (currentBreakTime > 599) {
       this.setState({ breakTime: 599, currentBreakTime: 599 });
+      this.setCookie('breakTime', 599);
     } else if (currentBreakTime < 0) {
       this.setState({ breakTime: 0, currentBreakTime: 0 });
     } else {
       this.setState({ breakTime: currentBreakTime, currentBreakTime });
+      this.setCookie('breakTime', currentBreakTime);
     }
   };
 
   changeNotifyMode = (mode) => {
     this.setState({ notifyMode: mode });
+    this.setCookie('notifyMode', mode);
   };
 
   toggleNotifyInstr = (e) => {
@@ -181,6 +189,7 @@ export default class App extends Component {
     }
 
     this.setState({ setsList });
+    this.setCookie(setsList);
   };
 
   editSet = (index) => {
@@ -212,12 +221,14 @@ export default class App extends Component {
     });
 
     this.setState({ setsList, editMode: false });
+    this.setCookie('setsList', setsList);
   };
 
   deleteSet = (index) => {
     const { setsList } = this.state;
     setsList.splice(index, 1);
     this.setState({ setsList });
+    this.setCookie('setsList', setsList);
   };
 
   showSetEditor = () => {
@@ -232,6 +243,12 @@ export default class App extends Component {
     if (e === undefined || e.keyCode === undefined || e.keyCode === 27) {
       this.setState({ showSetEditor: false, editMode: false });
     }
+  };
+
+  setCookie = (cookieName, cookieValue) => {
+    const { cookies } = this.props;
+    const tenDays = 60 * 60 * 24 * 10;
+    cookies.set(cookieName, cookieValue, { maxAge: tenDays });
   };
 
   resetSets = () => {
@@ -337,3 +354,9 @@ export default class App extends Component {
     );
   }
 }
+
+App.propTypes = {
+  cookies: PropTypes.instanceOf(Cookies).isRequired,
+};
+
+export default withCookies(App);
