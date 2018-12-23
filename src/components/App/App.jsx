@@ -16,7 +16,7 @@ class App extends Component {
     const { cookies } = props;
 
     this.state = {
-      showSetEditor: true,
+      showSetEditor: !cookies.get('setsList'),
       enteredExercise: '',
       enteredSetsNum: 1,
       setsList: cookies.get('setsList') || [],
