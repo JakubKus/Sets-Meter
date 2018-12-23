@@ -34,7 +34,7 @@ test('subtracts 1 minute and 21 seconds', () => {
   fireEvent.click(subtractTenSeconds);
   fireEvent.click(subtractSecond);
 
-  expect(container.querySelector('.timer .mins').innerHTML).toContain(0);
-  expect(container.querySelector('.timer .tenSecs').innerHTML).toContain(3);
-  expect(container.querySelector('.timer .secs').innerHTML).toContain(9);
+  expect(container.querySelector('.timer .mins').innerHTML).toContain(1);
+  expect(container.querySelector('.timer .tenSecs').innerHTML).toContain(5);
+  expect(container.querySelector('.timer .secs').innerHTML).toContain(3);
 });

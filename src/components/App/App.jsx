@@ -89,20 +89,19 @@ class App extends Component {
   };
 
   timerStart = () => {
-    const { isTimerRunning } = this.state;
+    const { isTimerRunning, currentBreakTime } = this.state;
+    const startTime = new Date().getTime();
 
     if (!isTimerRunning) {
       this.setState({ isTimerRunning: true });
       this.timer = setInterval(() => {
-        const { currentBreakTime } = this.state;
-        if (currentBreakTime > 0) {
-          this.setState(prevState => (
-            { currentBreakTime: prevState.currentBreakTime - 1 }
-          ));
+        const timePassed = Math.round((new Date().getTime() - startTime) / 1000);
+        if (currentBreakTime - timePassed >= 0) {
+          this.setState({ currentBreakTime: currentBreakTime - timePassed });
         } else {
           this.timerPause();
         }
-      }, 1000);
+      }, 250);
     }
   };
 
@@ -189,7 +188,6 @@ class App extends Component {
     }
 
     this.setState({ setsList });
-    this.setCookie(setsList);
   };
 
   editSet = (index) => {
