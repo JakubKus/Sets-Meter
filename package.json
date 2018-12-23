@@ -1,6 +1,6 @@
 {
   "name": "sets-meter",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "dependencies": {
     "eslint-config-airbnb": "^17.1.0",
     "node-sass": "^4.11.0",
