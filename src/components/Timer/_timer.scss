@@ -28,6 +28,10 @@
     animation-fill-mode: forwards;
   }
 
+  .invisible {
+    visibility: hidden;
+  }
+
   span {
     color: $colorYellow;
     display: inline-block;
