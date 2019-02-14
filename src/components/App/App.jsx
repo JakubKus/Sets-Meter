@@ -3,7 +3,6 @@ import ReactGA from 'react-ga';
 import { withCookies, Cookies } from 'react-cookie';
 import PropTypes from 'prop-types';
 import Header from '../Header/Header';
-import TimerButtons from '../TimerButtons/TimerButtons';
 import Timer from '../Timer/Timer';
 import NotifySettings from '../NotifySettings/NotifySettings';
 import SetEditor from '../SetEditor/SetEditor';
@@ -282,16 +281,6 @@ class App extends Component {
           resetSets={this.resetSets}
           showNotifySettings={showNotifySettings}
           toggleNotifySettings={this.toggleNotifySettings}
-        />
-        <TimerButtons
-          showTimerButtons={showTimerButtons}
-          currentBreakTime={currentBreakTime}
-          isTimerRunning={isTimerRunning}
-          timerStart={this.timerStart}
-          timerPause={this.timerPause}
-          timerStop={this.timerStop}
-          addTime={this.addTime}
-          gaEvent={this.gaEvent}
         />
         <Timer
           showTimerButtons={showTimerButtons}
