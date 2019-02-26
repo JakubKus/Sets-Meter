@@ -1,6 +1,6 @@
 <h1>Hello!</h1>
 <b>Sets Meter</b> is an open-source project to help you track your sets and breaks in your training!<br />
-<code>Demo -></code> [https://setsmeter.herokuapp.com]
+<code>Demo -></code> [https://setsmeter.firebaseapp.com]
 <br /><br />
 <ul>
   <li>Insert your training sets with their number to track how many are left and what are next!</li>
